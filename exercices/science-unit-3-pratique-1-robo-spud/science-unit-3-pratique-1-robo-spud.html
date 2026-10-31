@@ -1,0 +1,528 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Robo-Spud&#39;s Zero-Waste Picnic</title>
+  <style>:root {
+  --seed: #5264c7;
+  --accent: #5264c7;
+  --accent-soft: #eaecf8;
+  --ink: #24283e;
+  --muted: #596078;
+  --paper: #fff;
+  --canvas: #f3f4fa;
+  --line: #d5d9e6;
+  --success: #17664c;
+  --error: #a33642;
+  --radius: 18px;
+  font: 17px/1.6 "Segoe UI", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--canvas);
+  scrollbar-color: var(--accent) var(--canvas);
+  scrollbar-width: auto;
+  scrollbar-gutter: stable;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { width: min(100% - 36px, 900px); margin: 44px auto; }
+[hidden] { display: none !important; }
+h1, h2, button, .eyebrow, .question-number { font-family: "Trebuchet MS", "Segoe UI", sans-serif; }
+h1 { font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.12; letter-spacing: -.045em; margin: 14px 0; max-width: 20ch; }
+h2 { font-size: 1.1rem; line-height: 1.5; margin: 0; }
+p { margin: 0 0 12px; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+button, summary, .option { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.cover { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 34px 38px; border: 2px solid var(--accent); border-radius: 22px 22px 6px 6px; background: var(--paper); box-shadow: 6px 6px 0 var(--accent-soft); }
+.cover-copy { min-width: 0; }
+.eyebrow { color: var(--accent); font-weight: 800; font-size: .72rem; text-transform: uppercase; letter-spacing: .16em; }
+.subject { font-size: .85rem; font-weight: 700; }
+.subject span, .count { color: var(--muted); font-weight: 400; }
+.count { font-size: .85rem; margin: 0; }
+.illustration { flex: 0 0 144px; width: 144px; height: 128px; color: var(--accent); transform: rotate(5deg); }
+.introduction { padding: 30px 12px 16px; max-width: 78ch; }
+.context { font-weight: 600; }
+.materials { font-size: .9rem; color: var(--muted); }
+.opening-help { padding: 24px; border: 2px dashed var(--accent); border-radius: var(--radius); background: var(--paper); }
+.opening-help h2 { margin-bottom: 12px; }
+.progress-panel { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 0 0 24px; padding: 15px 20px; border-radius: var(--radius); background: var(--accent-soft); color: var(--accent); font-size: .85rem; font-weight: 700; }
+progress { width: 180px; height: 10px; border: 0; border-radius: 10px; overflow: hidden; accent-color: var(--accent); background: var(--paper); }
+progress::-webkit-progress-bar { background: var(--paper); }
+progress::-webkit-progress-value { background: var(--accent); border-radius: 10px; }
+progress::-moz-progress-bar { background: var(--accent); border-radius: 10px; }
+.questions { display: grid; gap: 18px; }
+.audio-help { margin-bottom: 24px; padding: 16px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+.audio-help > summary { color: var(--accent); font-weight: 700; }
+.audio-help p { margin: 12px 0; }
+.audio-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.audio-actions button { max-width: 100%; }
+.audio-details { font-size: .85rem; color: var(--muted); overflow-wrap: anywhere; }
+.question { padding: 25px 28px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); }
+.cloze-passage .questions { display: block; padding: 24px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); line-height: 2.8; }
+.cloze-passage .passage-fragment { display: inline; padding: 0; border: 0; border-radius: 0; }
+.cloze-passage .question-number { display: inline; font-size: .7rem; vertical-align: super; background: none; }
+.cloze-passage .question-tools { display: inline; margin: 0; }
+.cloze-passage .pronunciation { display: inline-block; vertical-align: middle; line-height: 1.5; }
+.cloze-passage .pronunciation summary { font-size: .75rem; }
+.cloze-passage .pronunciation[open] { display: block; padding: 8px; }
+.cloze-passage .feedback { display: block; line-height: 1.6; }
+.cloze-passage .listen { padding: 4px 8px; vertical-align: middle; }
+.question-heading { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.question-number { flex: 0 0 36px; min-height: 36px; display: grid; place-items: center; border-radius: 12px 12px 5px 12px; color: var(--accent); background: var(--accent-soft); font-size: .85rem; font-weight: 800; }
+.question h2, .mission p, .context { white-space: pre-line; overflow-wrap: anywhere; }
+.question-tools { display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+.question-tools:has(> *) { margin-bottom: 16px; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 9px; min-width: 0; }
+.option { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; min-height: 50px; border: 1px solid var(--line); border-radius: 12px; }
+.option:hover { border-color: var(--accent); background: var(--accent-soft); }
+.option:has(input:checked) { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); background: var(--accent-soft); }
+input[type="radio"] { accent-color: var(--accent); flex: 0 0 auto; width: 18px; height: 18px; margin: 4px 0 0; }
+.answer-label { display: block; font-size: .8rem; color: var(--muted); font-weight: 700; margin: 0 0 7px; }
+input[type="text"], textarea { width: 100%; min-height: 50px; border: 1.5px solid #939bb0; border-radius: 11px; background: var(--paper); color: var(--ink); padding: 11px 14px; font: inherit; }
+textarea { resize: none; min-height: 120px; }
+input[type="text"].cloze-input { display: inline-block; vertical-align: baseline; width: min(14ch, 100%); min-height: 44px; margin: 3px 5px; padding: 5px 10px; font: inherit; }
+.cloze-answer { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; vertical-align: middle; margin: 3px 5px; }
+.cloze-answer input.cloze-input { width: 14ch; min-width: 0; margin: 0; line-height: 1.4; }
+.cloze-answer .listen { flex: 0 0 auto; }
+input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--error); }
+button { min-height: 48px; border: 2px solid var(--accent); border-radius: 12px; padding: 11px 19px; background: var(--accent); color: white; font: 700 .95rem "Trebuchet MS", "Segoe UI", sans-serif; }
+button:hover { filter: brightness(.93); }
+button:active { transform: translateY(1px); }
+button:disabled { cursor: default; opacity: .55; filter: none; transform: none; }
+.secondary { background: var(--paper); color: var(--accent); }
+.secondary:hover { background: var(--accent-soft); filter: none; }
+.listen { min-height: 42px; padding: 6px 13px; font-size: .85rem; }
+.listen span { margin-right: 5px; }
+.listen svg { vertical-align: middle; }
+.cloze-passage .cloze-answer .listen { display: inline-grid; place-items: center; width: 44px; min-height: 44px; padding: 6px; }
+.pronunciation { align-self: center; font-size: .85rem; color: var(--muted); }
+.pronunciation p { margin: 8px 0 0; }
+.mission { padding: 12px 6px 4px; }
+.mission h2 { color: var(--accent); font-size: 1.35rem; margin: 10px 0; }
+.mission p { max-width: 72ch; }
+.feedback { margin-top: 18px; padding: 14px 16px; border-left: 4px solid var(--accent); border-radius: 4px 10px 10px 4px; background: var(--canvas); }
+.feedback p:last-child, .feedback ol:last-child { margin-bottom: 0; }
+.feedback strong { display: block; }
+.question[data-state="correct"] .feedback { border-color: var(--success); color: var(--success); }
+.question[data-state="incorrect"] .feedback { border-color: var(--error); }
+.question[data-state="incorrect"] .feedback > strong { color: var(--error); }
+.feedback p, .feedback ol { font-size: .9rem; margin-top: 8px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 14px; }
+.actions button:first-child { min-width: 230px; display: flex; justify-content: space-between; gap: 24px; }
+.score { min-height: 2rem; font-weight: 700; font-size: 1.05rem; }
+.speech-status { min-height: 1.6rem; color: var(--muted); font-size: .85rem; }
+.sources { border-top: 1px solid var(--line); margin-top: 30px; padding-top: 18px; color: var(--muted); font-size: .8rem; }
+.sources li { margin-bottom: 8px; overflow-wrap: anywhere; }
+.visual { overflow: auto; margin: 12px 0; }
+.quiz-visual { max-width: 100%; height: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--canvas); }
+::-webkit-scrollbar-thumb { background: var(--accent); border: 3px solid var(--canvas); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink); }
+::-webkit-scrollbar-thumb:active { background: var(--muted); }
+@media (max-width: 560px) {
+  main { width: calc(100% - 24px); margin: 22px auto; }
+  .cover { padding: 24px 22px; gap: 8px; }
+  .illustration { flex-basis: 72px; width: 72px; height: 72px; }
+  .subject span { display: block; }
+  .question { padding: 20px 18px; }
+  .question-heading { gap: 10px; }
+  .progress-panel { align-items: stretch; flex-direction: column; gap: 10px; }
+  progress { width: 100%; }
+  .actions { flex-direction: column; }
+  .actions button { width: 100%; }
+}
+@media (forced-colors: active) {
+  :root { scrollbar-color: auto; }
+  .question, .cover, .option, button { border: 1px solid CanvasText; }
+}
+@media (prefers-reduced-motion: reduce) { button:active { transform: none; } }
+
+:root{--seed:#49783A;--accent:#416C34;--accent-soft:#E9EFE7;}</style>
+</head>
+<body class="">
+  <main>
+    <header class="cover">
+      <div class="cover-copy">
+        <p class="eyebrow">Your practice notebook</p>
+        <p class="subject">Science — Unit 3 <span>· Grade 6</span></p>
+        <h1>Robo-Spud&#39;s Zero-Waste Picnic</h1>
+        <p class="count">12 questions · At your own pace</p>
+      </div>
+      <svg class='illustration' viewBox='0 0 144 128' aria-hidden='true' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M38 41q11-24 38-18 32-3 35 31l-3 42q-18 23-55 10-24-7-23-32Z' fill='var(--accent-soft)'/><path d='M71 23V10m-6 0h12M34 61H18v24m93-24h16v24M52 108v12m40-12v12M47 120h13m25 0h13'/><rect x='44' y='43' width='52' height='29' rx='10' fill='white'/><circle cx='58' cy='57' r='3'/><circle cx='82' cy='57' r='3'/><path d='M58 89q12 10 24 0'/></svg>
+    </header>
+    <section class="introduction">
+      <p>Complete 12 tasks in about 10–15 minutes. Choose an answer or write one word. Check your answers when you finish.</p>
+      <p class='context'>Robo-Spud, a potato-shaped robot, needs your help! Plan a picnic with less waste, visit a sorting centre and check the garden. This adventure is made up.</p>
+      
+    </section>
+    <aside id="opening-help" class="opening-help">
+      <h2>Open the interactive quiz</h2>
+      <p>In OneDrive, choose “Open → Open in app”. You can also download this file and open it in Chrome or Edge.</p>
+    </aside>
+    <div id="interactive" hidden>
+      
+      <section class="progress-panel" aria-label="Your progress">
+        <span id="progress-text">0 / 12 questions answered</span>
+        <progress id="progress" aria-labelledby="progress-text" max="12" value="0"></progress>
+      </section>
+      <div class="questions"><article class="question" data-question="0" aria-labelledby="prompt-1">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">01</span><h2 id="prompt-1">You buy apples for the picnic. Which choice reduces packaging waste before it is created?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-1' value='Buy each apple in its own plastic bag' aria-describedby='feedback-1'><span>Buy each apple in its own plastic bag</span></label><label class='option'><input type='radio' name='answer-1' value='Add a second bag around the apples' aria-describedby='feedback-1'><span>Add a second bag around the apples</span></label><label class='option'><input type='radio' name='answer-1' value='Buy loose apples without extra wrapping' aria-describedby='feedback-1'><span>Buy loose apples without extra wrapping</span></label><label class='option'><input type='radio' name='answer-1' value='Ask for an extra empty bag' aria-describedby='feedback-1'><span>Ask for an extra empty bag</span></label></fieldset>
+  <div class="feedback" id="feedback-1" hidden></div>
+</article><article class="question" data-question="1" aria-labelledby="prompt-2">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">02</span><h2 id="prompt-2">You wash an empty jam jar and use it to hold pencils. Which of the three Rs describes this?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-2' value='Reuse' aria-describedby='feedback-2'><span>Reuse</span></label><label class='option'><input type='radio' name='answer-2' value='Reduce' aria-describedby='feedback-2'><span>Reduce</span></label><label class='option'><input type='radio' name='answer-2' value='Recycle' aria-describedby='feedback-2'><span>Recycle</span></label><label class='option'><input type='radio' name='answer-2' value='None of the three Rs' aria-describedby='feedback-2'><span>None of the three Rs</span></label></fieldset>
+  <div class="feedback" id="feedback-2" hidden></div>
+</article><article class="question" data-question="2" aria-labelledby="prompt-3">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">03</span><h2 id="prompt-3">Old glass bottles are melted and made into new bottles. What happens to the glass?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-3' value='It is repaired' aria-describedby='feedback-3'><span>It is repaired</span></label><label class='option'><input type='radio' name='answer-3' value='It is thrown away' aria-describedby='feedback-3'><span>It is thrown away</span></label><label class='option'><input type='radio' name='answer-3' value='It is used again without being changed' aria-describedby='feedback-3'><span>It is used again without being changed</span></label><label class='option'><input type='radio' name='answer-3' value='It is recycled' aria-describedby='feedback-3'><span>It is recycled</span></label></fieldset>
+  <div class="feedback" id="feedback-3" hidden></div>
+</article><article class="question" data-question="3" aria-labelledby="prompt-4">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">04</span><h2 id="prompt-4">At the sorting centre, which item can a magnet pick up?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-4' value='An aluminium drink can' aria-describedby='feedback-4'><span>An aluminium drink can</span></label><label class='option'><input type='radio' name='answer-4' value='An ordinary steel food can' aria-describedby='feedback-4'><span>An ordinary steel food can</span></label><label class='option'><input type='radio' name='answer-4' value='A glass bottle' aria-describedby='feedback-4'><span>A glass bottle</span></label><label class='option'><input type='radio' name='answer-4' value='A plastic cup' aria-describedby='feedback-4'><span>A plastic cup</span></label></fieldset>
+  <div class="feedback" id="feedback-4" hidden></div>
+</article><article class="question" data-question="4" aria-labelledby="prompt-5">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">05</span><h2 id="prompt-5">Robo-Spud traces a paper napkin back to a tree. Which raw material from the tree can supply its fibres? Write one word.</h2></div>
+  
+  <div class="question-tools"></div>
+  <label class='answer-label' for='answer-5'>Your answer</label><input id='answer-5' type='text' aria-describedby='feedback-5' autocomplete='off' autocapitalize='off' spellcheck='false'>
+  <div class="feedback" id="feedback-5" hidden></div>
+</article><article class="question" data-question="5" aria-labelledby="prompt-6">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">06</span><h2 id="prompt-6">You are unsure whether a picnic package belongs in your recycling bin. What should you do?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-6' value='Put it in because it looks like plastic' aria-describedby='feedback-6'><span>Put it in because it looks like plastic</span></label><label class='option'><input type='radio' name='answer-6' value='Check your local collection&#39;s current instructions' aria-describedby='feedback-6'><span>Check your local collection&#39;s current instructions</span></label><label class='option'><input type='radio' name='answer-6' value='Follow a rule from another country' aria-describedby='feedback-6'><span>Follow a rule from another country</span></label><label class='option'><input type='radio' name='answer-6' value='Assume every kind of package is accepted' aria-describedby='feedback-6'><span>Assume every kind of package is accepted</span></label></fieldset>
+  <div class="feedback" id="feedback-6" hidden></div>
+</article><article class="question" data-question="6" aria-labelledby="prompt-7">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">07</span><h2 id="prompt-7">Which pair can go into Robo-Spud&#39;s backyard compost pile?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-7' value='Glass pieces and bottle caps' aria-describedby='feedback-7'><span>Glass pieces and bottle caps</span></label><label class='option'><input type='radio' name='answer-7' value='Plastic cups and aluminium foil' aria-describedby='feedback-7'><span>Plastic cups and aluminium foil</span></label><label class='option'><input type='radio' name='answer-7' value='Apple cores and dry leaves' aria-describedby='feedback-7'><span>Apple cores and dry leaves</span></label><label class='option'><input type='radio' name='answer-7' value='Steel cans and broken plates' aria-describedby='feedback-7'><span>Steel cans and broken plates</span></label></fieldset>
+  <div class="feedback" id="feedback-7" hidden></div>
+</article><article class="question" data-question="7" aria-labelledby="prompt-8">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">08</span><h2 id="prompt-8">You mix finished compost into the garden soil. What is a benefit?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-8' value='It adds organic matter and nutrients' aria-describedby='feedback-8'><span>It adds organic matter and nutrients</span></label><label class='option'><input type='radio' name='answer-8' value='It replaces all the water plants need' aria-describedby='feedback-8'><span>It replaces all the water plants need</span></label><label class='option'><input type='radio' name='answer-8' value='It stops all living things in the soil' aria-describedby='feedback-8'><span>It stops all living things in the soil</span></label><label class='option'><input type='radio' name='answer-8' value='It makes every plant grow at the same speed' aria-describedby='feedback-8'><span>It makes every plant grow at the same speed</span></label></fieldset>
+  <div class="feedback" id="feedback-8" hidden></div>
+</article><article class="question" data-question="8" aria-labelledby="prompt-9">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">09</span><h2 id="prompt-9">Robo-Spud finds a chart showing how long litter takes to break down outdoors. How should you read its times?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-9' value='As exact deadlines for every place' aria-describedby='feedback-9'><span>As exact deadlines for every place</span></label><label class='option'><input type='radio' name='answer-9' value='As proof that all materials break down equally fast' aria-describedby='feedback-9'><span>As proof that all materials break down equally fast</span></label><label class='option'><input type='radio' name='answer-9' value='As times that change only with an item&#39;s colour' aria-describedby='feedback-9'><span>As times that change only with an item&#39;s colour</span></label><label class='option'><input type='radio' name='answer-9' value='As estimates that depend on the material and conditions' aria-describedby='feedback-9'><span>As estimates that depend on the material and conditions</span></label></fieldset>
+  <div class="feedback" id="feedback-9" hidden></div>
+</article><article class="question" data-question="9" aria-labelledby="prompt-10">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">10</span><h2 id="prompt-10">In a made-up trial, one onion leaf measures 2 cm on day 1 and 6 cm on day 5. Which conclusion fits these observations?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-10' value='That leaf grew by 4 cm during the trial' aria-describedby='feedback-10'><span>That leaf grew by 4 cm during the trial</span></label><label class='option'><input type='radio' name='answer-10' value='Every onion always grows by 4 cm in five days' aria-describedby='feedback-10'><span>Every onion always grows by 4 cm in five days</span></label><label class='option'><input type='radio' name='answer-10' value='The leaf became 4 cm shorter' aria-describedby='feedback-10'><span>The leaf became 4 cm shorter</span></label><label class='option'><input type='radio' name='answer-10' value='The onion no longer needs water' aria-describedby='feedback-10'><span>The onion no longer needs water</span></label></fieldset>
+  <div class="feedback" id="feedback-10" hidden></div>
+</article><article class="question" data-question="10" aria-labelledby="prompt-11">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">11</span><h2 id="prompt-11">You grow a new basil plant from a piece of stem, without seeds. Which type of reproduction is this?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-11' value='Sexual reproduction' aria-describedby='feedback-11'><span>Sexual reproduction</span></label><label class='option'><input type='radio' name='answer-11' value='Asexual reproduction' aria-describedby='feedback-11'><span>Asexual reproduction</span></label><label class='option'><input type='radio' name='answer-11' value='Pollination' aria-describedby='feedback-11'><span>Pollination</span></label><label class='option'><input type='radio' name='answer-11' value='Seed germination' aria-describedby='feedback-11'><span>Seed germination</span></label></fieldset>
+  <div class="feedback" id="feedback-11" hidden></div>
+</article><article class="question" data-question="11" aria-labelledby="prompt-12">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">12</span><h2 id="prompt-12">A new plant has the same genetic information as its parent plant. What word from Unit 3 names this genetic copy? Write one word.</h2></div>
+  
+  <div class="question-tools"></div>
+  <label class='answer-label' for='answer-12'>Your answer</label><input id='answer-12' type='text' aria-describedby='feedback-12' autocomplete='off' autocapitalize='off' spellcheck='false'>
+  <div class="feedback" id="feedback-12" hidden></div>
+</article></div>
+      <div class="actions">
+        <button id="check" type="button" disabled>Check my answers <span aria-hidden="true">↗</span></button>
+        <button id="reset" class="secondary" type="button" disabled>Start again</button>
+      </div>
+      <p id="score" class="score" role="status" tabindex="-1"></p>
+      <p id="speech-status" class="speech-status" role="status"></p>
+    </div>
+    <details class="sources"><summary>Quiz sources</summary><ul><li>Flash of Genius 6 — Unit 3, The Three Rs · p. 28</li><li>Flash of Genius 6 — Unit 3, Waste Management and Recycling · p. 29–31</li><li>Flash of Genius 6 — Unit 3, Composting · p. 32</li><li>Flash of Genius 6 — Unit 3, Plant Propagation · p. 33</li><li>Flash of Genius 6 — Unit 3, Plants That Can Grow from Scraps · p. 24–27</li><li>Document de r&#233;f&#233;rence priv&#233;</li></ul></details>
+  </main>
+  <script id="quiz-data" type="application/json">{"language":"en","shuffleQuestions":false,"questions":[{"answers":["Buy loose apples without extra wrapping"],"explanation":"Reducing means preventing waste. Loose apples do not need individual wrappers.","solutionSteps":[],"points":1},{"answers":["Reuse"],"explanation":"The jar is used again for another purpose without being made into a new material.","solutionSteps":[],"points":1},{"answers":["It is recycled"],"explanation":"Recycling processes discarded materials to make new products.","solutionSteps":[],"points":1},{"answers":["An ordinary steel food can"],"explanation":"Ordinary steel food cans contain iron and are attracted to magnets. Aluminium is not.","solutionSteps":[],"points":1},{"answers":["wood"],"explanation":"Wood fibres can be used to make paper. Paper can also be made with recycled fibres.","solutionSteps":[],"points":1},{"answers":["Check your local collection\u0027s current instructions"],"explanation":"Accepted materials and collection instructions can differ between programs and change over time.","solutionSteps":[],"points":1},{"answers":["Apple cores and dry leaves"],"explanation":"Fruit scraps and dry leaves can break down in a well-managed compost pile.","solutionSteps":[],"points":1},{"answers":["It adds organic matter and nutrients"],"explanation":"Compost is added to soil to improve it. It supplies organic matter and helps the soil hold nutrients and moisture.","solutionSteps":[],"points":1},{"answers":["As estimates that depend on the material and conditions"],"explanation":"Materials and conditions such as moisture and temperature affect breakdown. A chart cannot give one exact time for every place.","solutionSteps":[],"points":1},{"answers":["That leaf grew by 4 cm during the trial"],"explanation":"The measured change is 6 \u2212 2 = 4 cm. These observations describe this leaf during this trial, not every onion.","solutionSteps":[],"points":1},{"answers":["Asexual reproduction"],"explanation":"A stem cutting can grow into a new plant without the joining of sex cells.","solutionSteps":[],"points":1},{"answers":["clone"],"explanation":"A clone is a genetic copy of its parent. The plants can still grow differently in different conditions.","solutionSteps":[],"points":1}],"labels":{"correct":"Well done!","incorrect":"Try again","empty":"Answer this question before checking it.","answer":"Expected answer: ","changed":"Your answers have changed. Check again to update your score.","answered":"questions answered","score":"Your score","missing":"still to answer","speaking":"Reading the word\u2026","audio":{"phrase":"Hello! This sentence helps you test the sound.","ready":"Select \u201CTest the voice\u201D, then tell us if you hear the sentence.","waiting":"Speech requested. Waiting for the voice\u2026","playing":"The browser reports that speech has started.","finished":"The browser reports that speech has finished. Did you hear the sentence?","wordFinished":"The browser reports that the word has finished.","heard":"You confirm that sound works for this test.","silent":"Speech was reported, but you heard nothing. Check this tab\u2019s sound and your audio output. Then compare with the downloaded file opened directly in Edge.","stopped":"Speech stopped. You can try again.","unsupported":"Speech synthesis is unavailable on this page. Try the downloaded file opened directly in Edge.","noStart":"The voice did not start within 8 seconds. The cause is unconfirmed. Retry, then compare with the downloaded file.","noEnd":"Speech may be stuck: no end was reported within 30 seconds. Retry with the downloaded file.","blocked":"The browser refused to start speech. Click the button again; if it persists, try outside the OneDrive preview.","missingVoice":"The engine cannot find the requested voice. Check the text-to-speech voices installed in Windows, then restart Edge.","network":"The voice reported a network error. Check your connection; a remote voice may need Internet.","device":"The speech engine cannot use the audio output. Check your speakers or headphones and retry.","engine":"The speech engine reported a failure. Restart Edge and retry.","unknown":"Speech failed. Check the details below and try the downloaded file.","voices":"Detected voices / in the requested language","selected":"Selected voice","automatic":"Browser\u2019s automatic selection","local":"on this device","remote":"remote service","embedded":"Opened in an embedded preview. Compare with the downloaded file to check the preview\u2019s effect.","direct":"Opened as a direct page.","code":"Last state"},"listenQuestion":"Listen to the word for question"}}</script>
+  <script>(() => {
+  "use strict";
+  const quiz = JSON.parse(document.getElementById("quiz-data").textContent);
+  const labels = quiz.labels;
+  const cards = Array.from(document.querySelectorAll("[data-question]"));
+  const score = document.getElementById("score");
+  const speechStatus = document.getElementById("speech-status");
+  const audioHelp = document.getElementById("audio-help");
+  const audioResult = document.getElementById("audio-result");
+  const audioConfirm = document.getElementById("audio-confirm");
+  const audioStop = document.getElementById("audio-stop");
+  const speechLanguage = quiz.language.toLowerCase().startsWith("es") ? "es-ES"
+    : quiz.language.toLowerCase().startsWith("en") ? "en-US" : "fr-CA";
+  const normalize = value => value.trim().normalize("NFC").toUpperCase();
+  const valueOf = card => {
+    const field = card.querySelector("input[type=text], textarea, input[type=radio]:checked");
+    return field ? field.value : "";
+  };
+  let checked = false;
+  let speechToken = 0;
+  let utterance;
+  let speechTimer;
+
+  function supportsSpeech() {
+    try {
+      return typeof window.speechSynthesis?.speak === "function" && typeof window.SpeechSynthesisUtterance === "function";
+    } catch {
+      return false;
+    }
+  }
+
+  function audioMessage(message, code, problem = false) {
+    if (!audioHelp) return;
+    audioResult.textContent = message;
+    document.getElementById("audio-code").textContent = labels.audio.code + " : " + code;
+    if (problem) {
+      audioHelp.open = true;
+      speechStatus.textContent = message;
+    }
+  }
+
+  function speechVoices() {
+    const voices = supportsSpeech() ? window.speechSynthesis.getVoices() : [];
+    const matching = voices.filter(voice => voice.lang.toLowerCase().replaceAll("_", "-").startsWith(speechLanguage.slice(0, 2)));
+    document.getElementById("audio-voices").textContent = labels.audio.voices + " (" + speechLanguage + ") : " + voices.length + " / " + matching.length;
+    return matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase() && voice.localService)
+      || matching.find(voice => voice.localService)
+      || matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase())
+      || matching[0];
+  }
+
+  function stopSpeech() {
+    speechToken++;
+    clearTimeout(speechTimer);
+    if (audioStop) audioStop.disabled = true;
+    try {
+      if (supportsSpeech()) window.speechSynthesis.cancel();
+    } catch {
+      // A voice service failure must not prevent clearing the answers.
+    }
+    utterance = null;
+  }
+
+  function shuffleQuestions() {
+    if (!quiz.shuffleQuestions) return;
+    for (let index = cards.length - 1; index > 0; index--) {
+      const other = Math.floor(Math.random() * (index + 1));
+      [cards[index], cards[other]] = [cards[other], cards[index]];
+    }
+    const container = document.querySelector(".questions");
+    cards.forEach((card, index) => {
+      container.append(card);
+      card.querySelector(".question-number").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector(".listen")?.setAttribute("aria-label", `${labels.listenQuestion} ${index + 1}`);
+    });
+  }
+
+  function updateProgress() {
+    const answered = cards.filter(card => valueOf(card).trim() !== "").length;
+    document.getElementById("progress").value = answered;
+    document.getElementById("progress-text").textContent = `${answered} / ${cards.length} ${labels.answered}`;
+  }
+
+  function paragraph(parent, text) {
+    const element = document.createElement("p");
+    element.textContent = text;
+    parent.append(element);
+  }
+
+  function checkAnswers() {
+    let points = 0;
+    let missing = 0;
+    const total = quiz.questions.reduce((sum, question) => sum + question.points, 0);
+    cards.forEach(card => {
+      const question = quiz.questions[Number(card.dataset.question)];
+      const answer = normalize(valueOf(card));
+      const correct = answer !== "" && question.answers.some(accepted => normalize(accepted) === answer);
+      const feedback = card.querySelector(".feedback");
+      feedback.replaceChildren();
+      feedback.hidden = false;
+      card.dataset.state = answer === "" ? "empty" : correct ? "correct" : "incorrect";
+      card.querySelectorAll("input, textarea").forEach(input => input.setAttribute("aria-invalid", correct ? "false" : "true"));
+      const heading = document.createElement("strong");
+      heading.textContent = answer === "" ? labels.empty : correct ? `✓ ${labels.correct}` : labels.incorrect;
+      feedback.append(heading);
+      if (answer === "") {
+        missing++;
+        return;
+      }
+      if (correct) points += question.points;
+      else paragraph(feedback, labels.answer + question.answers.join(" / "));
+      if (question.explanation) paragraph(feedback, question.explanation);
+      if (question.solutionSteps.length > 0) {
+        const steps = document.createElement("ol");
+        question.solutionSteps.forEach(step => {
+          const item = document.createElement("li");
+          item.textContent = step;
+          steps.append(item);
+        });
+        feedback.append(steps);
+      }
+    });
+    checked = true;
+    score.textContent = `${labels.score} : ${points} / ${total}${missing ? ` · ${missing} ${labels.missing}` : ""}`;
+    score.focus({ preventScroll: true });
+  }
+
+  function changed(card) {
+    card.querySelector(".feedback").hidden = true;
+    delete card.dataset.state;
+    card.querySelectorAll("input, textarea").forEach(input => input.removeAttribute("aria-invalid"));
+    if (checked) score.textContent = labels.changed;
+    updateProgress();
+  }
+
+  function speak(text, diagnostic = false) {
+    stopSpeech();
+    const token = speechToken;
+    audioConfirm.hidden = true;
+    speechStatus.textContent = "";
+    if (!supportsSpeech()) {
+      audioMessage(labels.audio.unsupported, "unsupported", true);
+      return;
+    }
+    const finish = () => {
+      if (token !== speechToken) return false;
+      clearTimeout(speechTimer);
+      audioStop.disabled = true;
+      utterance = null;
+      speechToken++;
+      return true;
+    };
+    const fail = code => {
+      if (!finish()) return;
+      const category = {
+        "not-allowed": "blocked", "language-unavailable": "missingVoice", "voice-unavailable": "missingVoice",
+        "synthesis-unavailable": "engine", "synthesis-failed": "engine",
+        "audio-busy": "device", "audio-hardware": "device", "network": "network",
+        "start-timeout": "noStart", "end-timeout": "noEnd", "canceled": "stopped", "interrupted": "stopped"
+      }[code] || "unknown";
+      audioMessage(labels.audio[category], code, true);
+      try { window.speechSynthesis.cancel(); } catch { /* Keep the diagnostic visible. */ }
+    };
+    try {
+      utterance = new SpeechSynthesisUtterance(text);
+      const voice = speechVoices();
+      document.getElementById("audio-selected").textContent = labels.audio.selected + " : " +
+        (voice ? voice.name + " (" + voice.lang + ", " + (voice.localService ? labels.audio.local : labels.audio.remote) + ")" : labels.audio.automatic);
+      utterance.lang = voice?.lang || speechLanguage;
+      if (voice) utterance.voice = voice;
+      utterance.rate = .85;
+      utterance.volume = 1;
+      utterance.onstart = () => {
+        if (token !== speechToken) return;
+        clearTimeout(speechTimer);
+        audioMessage(labels.audio.playing, "started");
+        speechStatus.textContent = diagnostic ? labels.audio.playing : labels.speaking;
+        speechTimer = setTimeout(() => fail("end-timeout"), 30000);
+      };
+      utterance.onend = () => {
+        if (!finish()) return;
+        audioMessage(diagnostic ? labels.audio.finished : labels.audio.wordFinished, "ended");
+        speechStatus.textContent = "";
+        audioConfirm.hidden = !diagnostic;
+      };
+      utterance.onerror = event => { if (token === speechToken) fail(event.error || "unknown"); };
+      audioStop.disabled = false;
+      audioMessage(labels.audio.waiting, "requested");
+      speechTimer = setTimeout(() => fail("start-timeout"), 8000);
+      window.speechSynthesis.resume();
+      window.speechSynthesis.speak(utterance);
+    } catch (error) {
+      fail(error.name || "exception");
+    }
+  }
+
+  if (audioHelp) {
+    audioMessage(labels.audio.ready, "ready");
+    document.getElementById("audio-environment").textContent = window.self !== window.top ? labels.audio.embedded : labels.audio.direct;
+    const refreshVoices = () => {
+      try { speechVoices(); }
+      catch { audioMessage(labels.audio.unknown, "voice-list-error", true); }
+    };
+    refreshVoices();
+    if (supportsSpeech()) window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
+    else audioMessage(labels.audio.unsupported, "unsupported", true);
+    document.getElementById("audio-test").addEventListener("click", () => speak(labels.audio.phrase, true));
+    audioStop.addEventListener("click", () => {
+      stopSpeech();
+      audioConfirm.hidden = true;
+      speechStatus.textContent = "";
+      audioMessage(labels.audio.stopped, "stopped");
+    });
+    document.getElementById("audio-heard").addEventListener("click", () => {
+      audioConfirm.hidden = true;
+      audioMessage(labels.audio.heard, "heard");
+    });
+    document.getElementById("audio-silent").addEventListener("click", () => {
+      audioConfirm.hidden = true;
+      audioMessage(labels.audio.silent, "not-heard", true);
+    });
+  }
+
+  cards.forEach(card => {
+    card.querySelectorAll("input, textarea").forEach(input => {
+      input.addEventListener("input", () => changed(card));
+      if (input.type === "radio") input.addEventListener("change", () => changed(card));
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter" && !event.isComposing && input.tagName !== "TEXTAREA") {
+          event.preventDefault();
+          const next = cards[cards.indexOf(card) + 1]?.querySelector("input, textarea") || document.getElementById("check");
+          next.focus();
+        }
+      });
+    });
+    const button = card.querySelector(".listen");
+    if (button) {
+      button.addEventListener("click", () => speak(quiz.questions[Number(card.dataset.question)].answers[0]));
+      button.disabled = false;
+    }
+  });
+
+  const check = document.getElementById("check");
+  check.addEventListener("click", checkAnswers);
+  check.disabled = false;
+  const reset = document.getElementById("reset");
+  reset.addEventListener("click", () => {
+    stopSpeech();
+    if (audioHelp) {
+      audioConfirm.hidden = true;
+      audioMessage(labels.audio.ready, "ready");
+    }
+    cards.forEach(card => {
+      card.querySelectorAll("input, textarea").forEach(input => {
+        if (input.type === "radio") input.checked = false;
+        else input.value = "";
+      });
+      changed(card);
+    });
+    checked = false;
+    shuffleQuestions();
+    score.textContent = "";
+    speechStatus.textContent = "";
+    cards[0]?.querySelector("input, textarea")?.focus();
+  });
+  reset.disabled = false;
+  shuffleQuestions();
+  updateProgress();
+  document.getElementById("interactive").hidden = false;
+  document.getElementById("opening-help").hidden = true;
+})();
+</script>
+</body>
+</html>
