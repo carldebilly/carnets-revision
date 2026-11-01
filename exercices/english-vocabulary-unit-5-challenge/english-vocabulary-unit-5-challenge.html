@@ -80,13 +80,14 @@ fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 9px; min-width:
 .option:has(input:checked) { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); background: var(--accent-soft); }
 input[type="radio"] { accent-color: var(--accent); flex: 0 0 auto; width: 18px; height: 18px; margin: 4px 0 0; }
 .answer-label { display: block; font-size: .8rem; color: var(--muted); font-weight: 700; margin: 0 0 7px; }
-input[type="text"], textarea { width: 100%; min-height: 50px; border: 1.5px solid #939bb0; border-radius: 11px; background: var(--paper); color: var(--ink); padding: 11px 14px; font: inherit; }
+input[type="text"], textarea, select { width: 100%; min-height: 50px; border: 1.5px solid #939bb0; border-radius: 11px; background: var(--paper); color: var(--ink); padding: 11px 14px; font: inherit; }
 textarea { resize: none; min-height: 120px; }
 input[type="text"].cloze-input { display: inline-block; vertical-align: baseline; width: min(14ch, 100%); min-height: 44px; margin: 3px 5px; padding: 5px 10px; font: inherit; }
 .cloze-answer { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; vertical-align: middle; margin: 3px 5px; }
 .cloze-answer input.cloze-input { width: 14ch; min-width: 0; margin: 0; line-height: 1.4; }
+.cloze-answer select.cloze-input { width: 21ch; max-width: 100%; min-height: 44px; padding: 5px 10px; margin: 0; }
 .cloze-answer .listen { flex: 0 0 auto; }
-input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--error); }
+input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--error); }
 button { min-height: 48px; border: 2px solid var(--accent); border-radius: 12px; padding: 11px 19px; background: var(--accent); color: white; font: 700 .95rem "Trebuchet MS", "Segoe UI", sans-serif; }
 button:hover { filter: brightness(.93); }
 button:active { transform: translateY(1px); }
@@ -186,7 +187,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
       <svg class='illustration' viewBox='0 0 144 128' aria-hidden='true' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><circle cx='72' cy='64' r='43' fill='var(--accent-soft)'/><circle cx='72' cy='64' r='34'/><path d='m57 82 7-28 24-10-8 28Z' fill='white'/><path d='m64 54 16 18M72 14V7m0 114v-7M22 64h-7m114 0h-7'/></svg>
     </header>
     <section class="introduction">
-      <p>Use the word bank for the first 12 answers. Write one word in its base form; spelling counts. Eight words will not be used in Part 1. For the last 8 questions, choose the most precise answer. Allow 15–20 minutes. Check your answers after both parts.</p>
+      <p>Complete the first 12 sentences with Unit 5 words. Online, choose from each menu; on paper, use the word bank. Use 12 different words; eight words are not needed in Part 1. For the last 8 questions, choose the most precise answer. Allow 15–20 minutes. Check your answers after both parts.</p>
       <p class='context'>You are at Camp Pine when a storm changes the day&#39;s plans. Follow the crew through the storm and think carefully about what each word adds to the scene.</p>
       
     </section>
@@ -200,74 +201,74 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
         <span id="progress-text">0 / 20 questions answered</span>
         <progress id="progress" aria-labelledby="progress-text" max="20" value="0"></progress>
       </section>
-      <div class="questions"><section class='mission'><h2>Part 1 — Find the word</h2><p>Word bank — acute, bluster, bungle, commentary, duration, eerie, facet, fidelity, fray, headstrong, inhabitant, numb, pacify, ravenous, refute, remorse, setback, smug, synopsis, tarry. Use 12 different words from this list, one in each gap. Eight words are not needed in this part.</p></section><article class="question" data-question="0" aria-labelledby="prompt-1">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">01</span><h2 id="prompt-1"><span class='cloze'><label class='sr-only' for='answer-1'>The cook visits for the summer, but Jo lives at the camp all year. Jo is a permanent  of Camp Pine.</label>The cook visits for the summer, but Jo lives at the camp all year. Jo is a permanent <span class='cloze-answer'><input class='cloze-input' id='answer-1' type='text' aria-describedby='feedback-1' autocomplete='off' autocapitalize='off' spellcheck='false'></span> of Camp Pine.</span></h2></div>
+      <div class="questions"><section class='mission'><h2>Part 1 — Find the word</h2><p>Each menu contains the same 20 words. On paper, use the bank below. Use one word per gap. All 12 answers are different.</p></section><article class="question" data-question="0" aria-labelledby="prompt-1">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">01</span><h2 id="prompt-1"><span class='cloze'><label class='sr-only' for='answer-1'>The cook visits for the summer, but Jo lives at the camp all year. Jo is a permanent  of Camp Pine.</label>The cook visits for the summer, but Jo lives at the camp all year. Jo is a permanent <span class='cloze-answer'><select class='cloze-input' id='answer-1' aria-describedby='feedback-1'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span> of Camp Pine.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-1" hidden></div>
 </article><article class="question" data-question="1" aria-labelledby="prompt-2">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">02</span><h2 id="prompt-2"><span class='cloze'><label class='sr-only' for='answer-2'>After a long hike without lunch, you finish two sandwiches and ask for three more. You are .</label>After a long hike without lunch, you finish two sandwiches and ask for three more. You are <span class='cloze-answer'><input class='cloze-input' id='answer-2' type='text' aria-describedby='feedback-2' autocomplete='off' autocapitalize='off' spellcheck='false'></span>.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">02</span><h2 id="prompt-2"><span class='cloze'><label class='sr-only' for='answer-2'>After a long hike without lunch, you finish two sandwiches and ask for three more. You are .</label>After a long hike without lunch, you finish two sandwiches and ask for three more. You are <span class='cloze-answer'><select class='cloze-input' id='answer-2' aria-describedby='feedback-2'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span>.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-2" hidden></div>
 </article><article class="question" data-question="2" aria-labelledby="prompt-3">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">03</span><h2 id="prompt-3"><span class='cloze'><label class='sr-only' for='answer-3'>Food is ready, but the leader must also plan shelter, water, and transport. Food is only one  of keeping the camp safe.</label>Food is ready, but the leader must also plan shelter, water, and transport. Food is only one <span class='cloze-answer'><input class='cloze-input' id='answer-3' type='text' aria-describedby='feedback-3' autocomplete='off' autocapitalize='off' spellcheck='false'></span> of keeping the camp safe.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">03</span><h2 id="prompt-3"><span class='cloze'><label class='sr-only' for='answer-3'>Food is ready, but the leader must also plan shelter, water, and transport. Food is only one  of keeping the camp safe.</label>Food is ready, but the leader must also plan shelter, water, and transport. Food is only one <span class='cloze-answer'><select class='cloze-input' id='answer-3' aria-describedby='feedback-3'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span> of keeping the camp safe.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-3" hidden></div>
 </article><article class="question" data-question="3" aria-labelledby="prompt-4">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">04</span><h2 id="prompt-4"><span class='cloze'><label class='sr-only' for='answer-4'>Another team offers you a prize to abandon your crew. You refuse and stay with them through the storm. Your  to your crew does not depend on rewards.</label>Another team offers you a prize to abandon your crew. You refuse and stay with them through the storm. Your <span class='cloze-answer'><input class='cloze-input' id='answer-4' type='text' aria-describedby='feedback-4' autocomplete='off' autocapitalize='off' spellcheck='false'></span> to your crew does not depend on rewards.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">04</span><h2 id="prompt-4"><span class='cloze'><label class='sr-only' for='answer-4'>Another team offers you a prize to abandon your crew. You refuse and stay with them through the storm. Your  to your crew does not depend on rewards.</label>Another team offers you a prize to abandon your crew. You refuse and stay with them through the storm. Your <span class='cloze-answer'><select class='cloze-input' id='answer-4' aria-describedby='feedback-4'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span> to your crew does not depend on rewards.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-4" hidden></div>
 </article><article class="question" data-question="4" aria-labelledby="prompt-5">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">05</span><h2 id="prompt-5"><span class='cloze'><label class='sr-only' for='answer-5'>The empty dining hall is silent until a chair rocks by itself. Nothing seems quite normal. The hall feels .</label>The empty dining hall is silent until a chair rocks by itself. Nothing seems quite normal. The hall feels <span class='cloze-answer'><input class='cloze-input' id='answer-5' type='text' aria-describedby='feedback-5' autocomplete='off' autocapitalize='off' spellcheck='false'></span>.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">05</span><h2 id="prompt-5"><span class='cloze'><label class='sr-only' for='answer-5'>The empty dining hall is silent until a chair rocks by itself. Nothing seems quite normal. The hall feels .</label>The empty dining hall is silent until a chair rocks by itself. Nothing seems quite normal. The hall feels <span class='cloze-answer'><select class='cloze-input' id='answer-5' aria-describedby='feedback-5'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span>.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-5" hidden></div>
 </article><article class="question" data-question="5" aria-labelledby="prompt-6">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">06</span><h2 id="prompt-6"><span class='cloze'><label class='sr-only' for='answer-6'>A rope rubs against a rough branch. Tiny loose threads appear along its edge. The rope is starting to .</label>A rope rubs against a rough branch. Tiny loose threads appear along its edge. The rope is starting to <span class='cloze-answer'><input class='cloze-input' id='answer-6' type='text' aria-describedby='feedback-6' autocomplete='off' autocapitalize='off' spellcheck='false'></span>.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">06</span><h2 id="prompt-6"><span class='cloze'><label class='sr-only' for='answer-6'>A rope rubs against a rough branch. Tiny loose threads appear along its edge. The rope is starting to .</label>A rope rubs against a rough branch. Tiny loose threads appear along its edge. The rope is starting to <span class='cloze-answer'><select class='cloze-input' id='answer-6' aria-describedby='feedback-6'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span>.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-6" hidden></div>
 </article><article class="question" data-question="6" aria-labelledby="prompt-7">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">07</span><h2 id="prompt-7"><span class='cloze'><label class='sr-only' for='answer-7'>You try to fix the tent zipper without checking it. Now both sides are stuck. A rushed attempt can  a repair.</label>You try to fix the tent zipper without checking it. Now both sides are stuck. A rushed attempt can <span class='cloze-answer'><input class='cloze-input' id='answer-7' type='text' aria-describedby='feedback-7' autocomplete='off' autocapitalize='off' spellcheck='false'></span> a repair.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">07</span><h2 id="prompt-7"><span class='cloze'><label class='sr-only' for='answer-7'>You try to fix the tent zipper without checking it. Now both sides are stuck. A rushed attempt can  a repair.</label>You try to fix the tent zipper without checking it. Now both sides are stuck. A rushed attempt can <span class='cloze-answer'><select class='cloze-input' id='answer-7' aria-describedby='feedback-7'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span> a repair.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-7" hidden></div>
 </article><article class="question" data-question="7" aria-labelledby="prompt-8">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">08</span><h2 id="prompt-8"><span class='cloze'><label class='sr-only' for='answer-8'>Two campers are shouting about the broken tent. You listen and help them settle down before making a plan. First, you need to  them.</label>Two campers are shouting about the broken tent. You listen and help them settle down before making a plan. First, you need to <span class='cloze-answer'><input class='cloze-input' id='answer-8' type='text' aria-describedby='feedback-8' autocomplete='off' autocapitalize='off' spellcheck='false'></span> them.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">08</span><h2 id="prompt-8"><span class='cloze'><label class='sr-only' for='answer-8'>Two campers are shouting about the broken tent. You listen and help them settle down before making a plan. First, you need to  them.</label>Two campers are shouting about the broken tent. You listen and help them settle down before making a plan. First, you need to <span class='cloze-answer'><select class='cloze-input' id='answer-8' aria-describedby='feedback-8'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span> them.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-8" hidden></div>
 </article><article class="question" data-question="8" aria-labelledby="prompt-9">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">09</span><h2 id="prompt-9"><span class='cloze'><label class='sr-only' for='answer-9'>Families cannot see the team moving the tents. On the radio, you explain each move as it happens. They follow your live .</label>Families cannot see the team moving the tents. On the radio, you explain each move as it happens. They follow your live <span class='cloze-answer'><input class='cloze-input' id='answer-9' type='text' aria-describedby='feedback-9' autocomplete='off' autocapitalize='off' spellcheck='false'></span>.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">09</span><h2 id="prompt-9"><span class='cloze'><label class='sr-only' for='answer-9'>Families cannot see the team moving the tents. On the radio, you explain each move as it happens. They follow your live .</label>Families cannot see the team moving the tents. On the radio, you explain each move as it happens. They follow your live <span class='cloze-answer'><select class='cloze-input' id='answer-9' aria-describedby='feedback-9'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span>.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-9" hidden></div>
 </article><article class="question" data-question="9" aria-labelledby="prompt-10">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">10</span><h2 id="prompt-10"><span class='cloze'><label class='sr-only' for='answer-10'>The rain starts at 2 p.m. and stops at 5 p.m. Your report records three hours as its .</label>The rain starts at 2 p.m. and stops at 5 p.m. Your report records three hours as its <span class='cloze-answer'><input class='cloze-input' id='answer-10' type='text' aria-describedby='feedback-10' autocomplete='off' autocapitalize='off' spellcheck='false'></span>.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">10</span><h2 id="prompt-10"><span class='cloze'><label class='sr-only' for='answer-10'>The rain starts at 2 p.m. and stops at 5 p.m. Your report records three hours as its .</label>The rain starts at 2 p.m. and stops at 5 p.m. Your report records three hours as its <span class='cloze-answer'><select class='cloze-input' id='answer-10' aria-describedby='feedback-10'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span>.</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-10" hidden></div>
 </article><article class="question" data-question="10" aria-labelledby="prompt-11">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">11</span><h2 id="prompt-11"><span class='cloze'><label class='sr-only' for='answer-11'>Everyone is leaving the wet camp. You stop for one last look and fall behind. The leader calls, &quot;Do not !&quot;</label>Everyone is leaving the wet camp. You stop for one last look and fall behind. The leader calls, &quot;Do not <span class='cloze-answer'><input class='cloze-input' id='answer-11' type='text' aria-describedby='feedback-11' autocomplete='off' autocapitalize='off' spellcheck='false'></span>!&quot;</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">11</span><h2 id="prompt-11"><span class='cloze'><label class='sr-only' for='answer-11'>Everyone is leaving the wet camp. You stop for one last look and fall behind. The leader calls, &quot;Do not !&quot;</label>Everyone is leaving the wet camp. You stop for one last look and fall behind. The leader calls, &quot;Do not <span class='cloze-answer'><select class='cloze-input' id='answer-11' aria-describedby='feedback-11'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span>!&quot;</span></h2></div>
   
   <div class="question-tools"></div>
   
   <div class="feedback" id="feedback-11" hidden></div>
 </article><article class="question" data-question="11" aria-labelledby="prompt-12">
-  <div class="question-heading"><span class="question-number" aria-hidden="true">12</span><h2 id="prompt-12"><span class='cloze'><label class='sr-only' for='answer-12'>At home, you turn ten pages about the storm into five sentences covering the main events. You send this  to the camp newsletter.</label>At home, you turn ten pages about the storm into five sentences covering the main events. You send this <span class='cloze-answer'><input class='cloze-input' id='answer-12' type='text' aria-describedby='feedback-12' autocomplete='off' autocapitalize='off' spellcheck='false'></span> to the camp newsletter.</span></h2></div>
+  <div class="question-heading"><span class="question-number" aria-hidden="true">12</span><h2 id="prompt-12"><span class='cloze'><label class='sr-only' for='answer-12'>At home, you turn ten pages about the storm into five sentences covering the main events. You send this  to the camp newsletter.</label>At home, you turn ten pages about the storm into five sentences covering the main events. You send this <span class='cloze-answer'><select class='cloze-input' id='answer-12' aria-describedby='feedback-12'><option value=''>Choose a word…</option><option value='acute'>acute</option><option value='bluster'>bluster</option><option value='bungle'>bungle</option><option value='commentary'>commentary</option><option value='duration'>duration</option><option value='eerie'>eerie</option><option value='facet'>facet</option><option value='fidelity'>fidelity</option><option value='fray'>fray</option><option value='headstrong'>headstrong</option><option value='inhabitant'>inhabitant</option><option value='numb'>numb</option><option value='pacify'>pacify</option><option value='ravenous'>ravenous</option><option value='refute'>refute</option><option value='remorse'>remorse</option><option value='setback'>setback</option><option value='smug'>smug</option><option value='synopsis'>synopsis</option><option value='tarry'>tarry</option></select></span> to the camp newsletter.</span></h2></div>
   
   <div class="question-tools"></div>
   
@@ -346,7 +347,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     : quiz.language.toLowerCase().startsWith("en") ? "en-US" : "fr-CA";
   const normalize = value => value.trim().normalize("NFC").toUpperCase();
   const valueOf = card => {
-    const field = card.querySelector("input[type=text], textarea, input[type=radio]:checked");
+    const field = card.querySelector("input[type=text], textarea, select, input[type=radio]:checked");
     return field ? field.value : "";
   };
   let checked = false;
@@ -432,7 +433,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
       feedback.replaceChildren();
       feedback.hidden = false;
       card.dataset.state = answer === "" ? "empty" : correct ? "correct" : "incorrect";
-      card.querySelectorAll("input, textarea").forEach(input => input.setAttribute("aria-invalid", correct ? "false" : "true"));
+      card.querySelectorAll("input, textarea, select").forEach(input => input.setAttribute("aria-invalid", correct ? "false" : "true"));
       const heading = document.createElement("strong");
       heading.textContent = answer === "" ? labels.empty : correct ? `✓ ${labels.correct}` : labels.incorrect;
       feedback.append(heading);
@@ -461,7 +462,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
   function changed(card) {
     card.querySelector(".feedback").hidden = true;
     delete card.dataset.state;
-    card.querySelectorAll("input, textarea").forEach(input => input.removeAttribute("aria-invalid"));
+    card.querySelectorAll("input, textarea, select").forEach(input => input.removeAttribute("aria-invalid"));
     if (checked) score.textContent = labels.changed;
     updateProgress();
   }
@@ -555,13 +556,13 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
   }
 
   cards.forEach(card => {
-    card.querySelectorAll("input, textarea").forEach(input => {
+    card.querySelectorAll("input, textarea, select").forEach(input => {
       input.addEventListener("input", () => changed(card));
-      if (input.type === "radio") input.addEventListener("change", () => changed(card));
+      if (input.type === "radio" || input.tagName === "SELECT") input.addEventListener("change", () => changed(card));
       input.addEventListener("keydown", event => {
-        if (event.key === "Enter" && !event.isComposing && input.tagName !== "TEXTAREA") {
+        if (event.key === "Enter" && !event.isComposing && input.tagName !== "TEXTAREA" && input.tagName !== "SELECT") {
           event.preventDefault();
-          const next = cards[cards.indexOf(card) + 1]?.querySelector("input, textarea") || document.getElementById("check");
+          const next = cards[cards.indexOf(card) + 1]?.querySelector("input, textarea, select") || document.getElementById("check");
           next.focus();
         }
       });
@@ -584,7 +585,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
       audioMessage(labels.audio.ready, "ready");
     }
     cards.forEach(card => {
-      card.querySelectorAll("input, textarea").forEach(input => {
+      card.querySelectorAll("input, textarea, select").forEach(input => {
         if (input.type === "radio") input.checked = false;
         else input.value = "";
       });
@@ -594,7 +595,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     shuffleQuestions();
     score.textContent = "";
     speechStatus.textContent = "";
-    cards[0]?.querySelector("input, textarea")?.focus();
+    cards[0]?.querySelector("input, textarea, select")?.focus();
   });
   reset.disabled = false;
   shuffleQuestions();
