@@ -1,0 +1,560 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Storm Lab: The Weather Station</title>
+  <style>:root {
+  --seed: #5264c7;
+  --accent: #5264c7;
+  --accent-soft: #eaecf8;
+  --ink: #24283e;
+  --muted: #596078;
+  --paper: #fff;
+  --canvas: #f3f4fa;
+  --line: #d5d9e6;
+  --success: #17664c;
+  --error: #a33642;
+  --radius: 18px;
+  font: 17px/1.6 "Segoe UI", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--canvas);
+  scrollbar-color: var(--accent) var(--canvas);
+  scrollbar-width: auto;
+  scrollbar-gutter: stable;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { width: min(100% - 36px, 900px); margin: 44px auto; }
+[hidden] { display: none !important; }
+h1, h2, button, .eyebrow, .question-number { font-family: "Trebuchet MS", "Segoe UI", sans-serif; }
+h1 { font-size: clamp(2rem, 4vw, 3.15rem); line-height: 1.12; letter-spacing: -.045em; margin: 14px 0; max-width: 20ch; }
+h2 { font-size: 1.1rem; line-height: 1.5; margin: 0; }
+p { margin: 0 0 12px; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+button, summary, .option { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.cover { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 34px 38px; border: 2px solid var(--accent); border-radius: 22px 22px 6px 6px; background: var(--paper); box-shadow: 6px 6px 0 var(--accent-soft); }
+.cover-copy { min-width: 0; }
+.eyebrow { color: var(--accent); font-weight: 800; font-size: .72rem; text-transform: uppercase; letter-spacing: .16em; }
+.subject { font-size: .85rem; font-weight: 700; }
+.subject span, .count { color: var(--muted); font-weight: 400; }
+.count { font-size: .85rem; margin: 0; }
+.illustration { flex: 0 0 144px; width: 144px; height: 128px; color: var(--accent); transform: rotate(5deg); }
+.introduction { padding: 30px 12px 16px; max-width: 78ch; }
+.context { font-weight: 600; }
+.materials { font-size: .9rem; color: var(--muted); }
+.opening-help { padding: 24px; border: 2px dashed var(--accent); border-radius: var(--radius); background: var(--paper); }
+.opening-help h2 { margin-bottom: 12px; }
+.progress-panel { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 0 0 24px; padding: 15px 20px; border-radius: var(--radius); background: var(--accent-soft); color: var(--accent); font-size: .85rem; font-weight: 700; }
+progress { width: 180px; height: 10px; border: 0; border-radius: 10px; overflow: hidden; accent-color: var(--accent); background: var(--paper); }
+progress::-webkit-progress-bar { background: var(--paper); }
+progress::-webkit-progress-value { background: var(--accent); border-radius: 10px; }
+progress::-moz-progress-bar { background: var(--accent); border-radius: 10px; }
+.questions { display: grid; gap: 18px; }
+.audio-help { margin-bottom: 24px; padding: 16px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+.audio-help > summary { color: var(--accent); font-weight: 700; }
+.audio-help p { margin: 12px 0; }
+.audio-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.audio-actions button { max-width: 100%; }
+.audio-details { font-size: .85rem; color: var(--muted); overflow-wrap: anywhere; }
+.question { padding: 25px 28px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); }
+.cloze-passage .questions { display: block; padding: 24px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); line-height: 2.8; }
+.cloze-passage .passage-fragment { display: inline; padding: 0; border: 0; border-radius: 0; }
+.cloze-passage .question-number { display: inline; font-size: .7rem; vertical-align: super; background: none; }
+.cloze-passage .question-tools { display: inline; margin: 0; }
+.cloze-passage .pronunciation { display: inline-block; vertical-align: middle; line-height: 1.5; }
+.cloze-passage .pronunciation summary { font-size: .75rem; }
+.cloze-passage .pronunciation[open] { display: block; padding: 8px; }
+.cloze-passage .feedback { display: block; line-height: 1.6; }
+.cloze-passage .listen { padding: 4px 8px; vertical-align: middle; }
+.question-heading { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.question-number { flex: 0 0 36px; min-height: 36px; display: grid; place-items: center; border-radius: 12px 12px 5px 12px; color: var(--accent); background: var(--accent-soft); font-size: .85rem; font-weight: 800; }
+.question h2, .mission p, .context { white-space: pre-line; overflow-wrap: anywhere; }
+.question-tools { display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+.question-tools:has(> *) { margin-bottom: 16px; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 9px; min-width: 0; }
+.option { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; min-height: 50px; border: 1px solid var(--line); border-radius: 12px; }
+.option:hover { border-color: var(--accent); background: var(--accent-soft); }
+.option:has(input:checked) { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); background: var(--accent-soft); }
+input[type="radio"] { accent-color: var(--accent); flex: 0 0 auto; width: 18px; height: 18px; margin: 4px 0 0; }
+.answer-label { display: block; font-size: .8rem; color: var(--muted); font-weight: 700; margin: 0 0 7px; }
+input[type="text"], textarea, select { width: 100%; min-height: 50px; border: 1.5px solid #939bb0; border-radius: 11px; background: var(--paper); color: var(--ink); padding: 11px 14px; font: inherit; }
+textarea { resize: none; min-height: 120px; }
+input[type="text"].cloze-input { display: inline-block; vertical-align: baseline; width: min(14ch, 100%); min-height: 44px; margin: 3px 5px; padding: 5px 10px; font: inherit; }
+.cloze-answer { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; vertical-align: middle; margin: 3px 5px; }
+.cloze-answer input.cloze-input { width: 14ch; min-width: 0; margin: 0; line-height: 1.4; }
+.cloze-answer select.cloze-input { width: 21ch; max-width: 100%; min-height: 44px; padding: 5px 10px; margin: 0; }
+.cloze-answer .listen { flex: 0 0 auto; }
+input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--error); }
+button { min-height: 48px; border: 2px solid var(--accent); border-radius: 12px; padding: 11px 19px; background: var(--accent); color: white; font: 700 .95rem "Trebuchet MS", "Segoe UI", sans-serif; }
+button:hover { filter: brightness(.93); }
+button:active { transform: translateY(1px); }
+button:disabled { cursor: default; opacity: .55; filter: none; transform: none; }
+.secondary { background: var(--paper); color: var(--accent); }
+.secondary:hover { background: var(--accent-soft); filter: none; }
+.listen { min-height: 42px; padding: 6px 13px; font-size: .85rem; }
+.listen span { margin-right: 5px; }
+.listen svg { vertical-align: middle; }
+.cloze-passage .cloze-answer .listen { display: inline-grid; place-items: center; width: 44px; min-height: 44px; padding: 6px; }
+.pronunciation { align-self: center; font-size: .85rem; color: var(--muted); }
+.pronunciation p { margin: 8px 0 0; }
+.mission { padding: 12px 6px 4px; }
+.mission h2 { color: var(--accent); font-size: 1.35rem; margin: 10px 0; }
+.mission p { max-width: 72ch; }
+.feedback { margin-top: 18px; padding: 14px 16px; border-left: 4px solid var(--accent); border-radius: 4px 10px 10px 4px; background: var(--canvas); }
+.feedback p:last-child, .feedback ol:last-child { margin-bottom: 0; }
+.feedback strong { display: block; }
+.question[data-state="correct"] .feedback { border-color: var(--success); color: var(--success); }
+.question[data-state="incorrect"] .feedback { border-color: var(--error); }
+.question[data-state="incorrect"] .feedback > strong { color: var(--error); }
+.feedback p, .feedback ol { font-size: .9rem; margin-top: 8px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 14px; }
+.actions button:first-child { min-width: 230px; display: flex; justify-content: space-between; gap: 24px; }
+.score { min-height: 2rem; font-weight: 700; font-size: 1.05rem; }
+.speech-status { min-height: 1.6rem; color: var(--muted); font-size: .85rem; }
+.sources { border-top: 1px solid var(--line); margin-top: 30px; padding-top: 18px; color: var(--muted); font-size: .8rem; }
+.sources li { margin-bottom: 8px; overflow-wrap: anywhere; }
+.visual { overflow: auto; margin: 12px 0; }
+.quiz-visual { max-width: 100%; height: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--canvas); }
+::-webkit-scrollbar-thumb { background: var(--accent); border: 3px solid var(--canvas); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ink); }
+::-webkit-scrollbar-thumb:active { background: var(--muted); }
+@media (max-width: 560px) {
+  main { width: calc(100% - 24px); margin: 22px auto; }
+  .cover { padding: 24px 22px; gap: 8px; }
+  .illustration { flex-basis: 72px; width: 72px; height: 72px; }
+  .subject span { display: block; }
+  .question { padding: 20px 18px; }
+  .question-heading { gap: 10px; }
+  .progress-panel { align-items: stretch; flex-direction: column; gap: 10px; }
+  progress { width: 100%; }
+  .actions { flex-direction: column; }
+  .actions button { width: 100%; }
+}
+@media (forced-colors: active) {
+  :root { scrollbar-color: auto; }
+  .question, .cover, .option, button { border: 1px solid CanvasText; }
+}
+@media (prefers-reduced-motion: reduce) { button:active { transform: none; } }
+
+:root{--seed:#486D9A;--accent:#486D9A;--accent-soft:#E9EDF3;}</style>
+<script>
+(() => {
+  "use strict";
+  const site = new URL("https://carldebilly.github.io/carnets-revision/");
+  if (location.origin !== site.origin || !location.pathname.startsWith(site.pathname)) return;
+  const measurementId = "G-WZYJXT0PZ4";
+  const quizId = "science-unit-4-storm-lab";
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  gtag("consent", "default", {
+    analytics_storage: "granted", ad_storage: "denied",
+    ad_user_data: "denied", ad_personalization: "denied"
+  });
+  gtag("js", new Date());
+  gtag("config", measurementId, {
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false,
+    page_location: location.origin + location.pathname,
+    page_referrer: "",
+    page_title: document.title
+  });
+  const tag = document.createElement("script");
+  tag.async = true;
+  tag.src = "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
+  document.head.appendChild(tag);
+  if (quizId) document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("check")?.addEventListener("click", () => {
+      gtag("event", "quiz_validated", { quiz_id: quizId, send_to: measurementId });
+    });
+  }, { once: true });
+})();
+</script></head>
+<body class="">
+  <main>
+    <header class="cover">
+      <div class="cover-copy">
+        <p class="eyebrow">Your practice notebook</p>
+        <p class="subject">Science — Unit 4, electricity and thunderstorms <span>· Grade 6</span></p>
+        <h1>Storm Lab: The Weather Station</h1>
+        <p class="count">12 questions · At your own pace</p>
+      </div>
+      <svg class='illustration' viewBox='0 0 144 128' aria-hidden='true' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><circle cx='72' cy='63' r='32' fill='var(--accent-soft)'/><ellipse cx='72' cy='63' rx='62' ry='17' transform='rotate(-25 72 63)'/><path d='M60 37q18 5 18 20t13 25M35 20v12m-6-6h12M121 87v10m-5-5h10'/></svg>
+    </header>
+    <section class="introduction">
+      <p>Answer the 12 questions. Use the observations given; you do not need to perform an experiment. Allow 10 to 15 minutes.</p>
+      <p class='context'>You are reviewing a weather station&#39;s training cards. Practise conductors, insulators, experiments, and thunderstorm safety.</p>
+      
+    </section>
+    <aside id="opening-help" class="opening-help">
+      <h2>Open the interactive quiz</h2>
+      <p>In OneDrive, choose “Open → Open in app”. You can also download this file and open it in Chrome or Edge.</p>
+    </aside>
+    <div id="interactive" hidden>
+      
+      <section class="progress-panel" aria-label="Your progress">
+        <span id="progress-text">0 / 12 questions answered</span>
+        <progress id="progress" aria-labelledby="progress-text" max="12" value="0"></progress>
+      </section>
+      <div class="questions"><article class="question" data-question="0" aria-labelledby="prompt-1">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">01</span><h2 id="prompt-1">What is the name of the tall storm clouds discussed in Unit 4? Write the cloud name only.</h2></div>
+  
+  <div class="question-tools"></div>
+  <label class='answer-label' for='answer-1'>Your answer</label><input id='answer-1' type='text' aria-describedby='feedback-1' autocomplete='off' autocapitalize='off' spellcheck='false'>
+  <div class="feedback" id="feedback-1" hidden></div>
+</article><article class="question" data-question="1" aria-labelledby="prompt-2">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">02</span><h2 id="prompt-2">For flash A, you hear thunder 3 seconds later. For flash B, you hear thunder 9 seconds later. Which flash was farther away? Write A or B.</h2></div>
+  
+  <div class="question-tools"></div>
+  <label class='answer-label' for='answer-2'>Your answer</label><input id='answer-2' type='text' aria-describedby='feedback-2' autocomplete='off' autocapitalize='off' spellcheck='false'>
+  <div class="feedback" id="feedback-2" hidden></div>
+</article><article class="question" data-question="2" aria-labelledby="prompt-3">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">03</span><h2 id="prompt-3">Why do you usually see a flash before hearing its thunder?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-3' value='Light travels faster than sound.' aria-describedby='feedback-3'><span>Light travels faster than sound.</span></label><label class='option'><input type='radio' name='answer-3' value='Sound travels faster than light.' aria-describedby='feedback-3'><span>Sound travels faster than light.</span></label><label class='option'><input type='radio' name='answer-3' value='The flash waits for the thunder.' aria-describedby='feedback-3'><span>The flash waits for the thunder.</span></label></fieldset>
+  <div class="feedback" id="feedback-3" hidden></div>
+</article><article class="question" data-question="3" aria-labelledby="prompt-4">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">04</span><h2 id="prompt-4">What helps separate electrical charges inside a storm cloud?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-4' value='The cloud touching a metal roof' aria-describedby='feedback-4'><span>The cloud touching a metal roof</span></label><label class='option'><input type='radio' name='answer-4' value='Collisions between small ice crystals and soft hail' aria-describedby='feedback-4'><span>Collisions between small ice crystals and soft hail</span></label><label class='option'><input type='radio' name='answer-4' value='Two whole clouds rubbing together like balloons' aria-describedby='feedback-4'><span>Two whole clouds rubbing together like balloons</span></label></fieldset>
+  <div class="feedback" id="feedback-4" hidden></div>
+</article><article class="question" data-question="4" aria-labelledby="prompt-5">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">05</span><h2 id="prompt-5">Why does a typical electrical cable have a metal wire inside a plastic cover?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-5' value='Both parts stop current equally.' aria-describedby='feedback-5'><span>Both parts stop current equally.</span></label><label class='option'><input type='radio' name='answer-5' value='Plastic carries current and metal blocks it.' aria-describedby='feedback-5'><span>Plastic carries current and metal blocks it.</span></label><label class='option'><input type='radio' name='answer-5' value='Metal carries current; plastic helps insulate it.' aria-describedby='feedback-5'><span>Metal carries current; plastic helps insulate it.</span></label></fieldset>
+  <div class="feedback" id="feedback-5" hidden></div>
+</article><article class="question" data-question="5" aria-labelledby="prompt-6">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">06</span><h2 id="prompt-6">Two similar pieces of wood are tested. One is dry; the other is wet with ordinary tap water. Which would generally conduct better?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-6' value='The wet piece' aria-describedby='feedback-6'><span>The wet piece</span></label><label class='option'><input type='radio' name='answer-6' value='The dry piece' aria-describedby='feedback-6'><span>The dry piece</span></label><label class='option'><input type='radio' name='answer-6' value='Moisture can never affect wood' aria-describedby='feedback-6'><span>Moisture can never affect wood</span></label></fieldset>
+  <div class="feedback" id="feedback-6" hidden></div>
+</article><article class="question" data-question="6" aria-labelledby="prompt-7">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">07</span><h2 id="prompt-7">Which sample would generally conduct electricity better: very pure water or water with dissolved table salt?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-7' value='Very pure water' aria-describedby='feedback-7'><span>Very pure water</span></label><label class='option'><input type='radio' name='answer-7' value='Water with dissolved salt' aria-describedby='feedback-7'><span>Water with dissolved salt</span></label><label class='option'><input type='radio' name='answer-7' value='Neither can carry any current' aria-describedby='feedback-7'><span>Neither can carry any current</span></label></fieldset>
+  <div class="feedback" id="feedback-7" hidden></div>
+</article><article class="question" data-question="7" aria-labelledby="prompt-8">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">08</span><h2 id="prompt-8">In a working battery-and-bulb test, inserting a metal key makes the bulb light. What does this result show?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-8' value='All materials conduct equally well.' aria-describedby='feedback-8'><span>All materials conduct equally well.</span></label><label class='option'><input type='radio' name='answer-8' value='The key creates electricity by itself.' aria-describedby='feedback-8'><span>The key creates electricity by itself.</span></label><label class='option'><input type='radio' name='answer-8' value='The key allows enough current to flow to light the bulb.' aria-describedby='feedback-8'><span>The key allows enough current to flow to light the bulb.</span></label></fieldset>
+  <div class="feedback" id="feedback-8" hidden></div>
+</article><article class="question" data-question="8" aria-labelledby="prompt-9">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">09</span><h2 id="prompt-9">Air normally insulates well. How can an electrical discharge still pass through it in a storm?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-9' value='A very strong electric field can make the air conduct.' aria-describedby='feedback-9'><span>A very strong electric field can make the air conduct.</span></label><label class='option'><input type='radio' name='answer-9' value='Air is always as good a conductor as copper.' aria-describedby='feedback-9'><span>Air is always as good a conductor as copper.</span></label><label class='option'><input type='radio' name='answer-9' value='Air conducts only when every metal object is removed.' aria-describedby='feedback-9'><span>Air conducts only when every metal object is removed.</span></label></fieldset>
+  <div class="feedback" id="feedback-9" hidden></div>
+</article><article class="question" data-question="9" aria-labelledby="prompt-10">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">10</span><h2 id="prompt-10">You hear thunder outside. Which is the appropriate shelter among these choices?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-10' value='A picnic shelter with open sides' aria-describedby='feedback-10'><span>A picnic shelter with open sides</span></label><label class='option'><input type='radio' name='answer-10' value='Inside a solid building with closed walls and a roof' aria-describedby='feedback-10'><span>Inside a solid building with closed walls and a roof</span></label><label class='option'><input type='radio' name='answer-10' value='Under a lone tall tree' aria-describedby='feedback-10'><span>Under a lone tall tree</span></label></fieldset>
+  <div class="feedback" id="feedback-10" hidden></div>
+</article><article class="question" data-question="10" aria-labelledby="prompt-11">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">11</span><h2 id="prompt-11">The storm seems to have passed. How long should you wait after the last thunder before returning outdoors?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-11' value='Until the rain stops' aria-describedby='feedback-11'><span>Until the rain stops</span></label><label class='option'><input type='radio' name='answer-11' value='Just 2 minutes' aria-describedby='feedback-11'><span>Just 2 minutes</span></label><label class='option'><input type='radio' name='answer-11' value='At least 30 minutes' aria-describedby='feedback-11'><span>At least 30 minutes</span></label></fieldset>
+  <div class="feedback" id="feedback-11" hidden></div>
+</article><article class="question" data-question="11" aria-labelledby="prompt-12">
+  <div class="question-heading"><span class="question-number" aria-hidden="true">12</span><h2 id="prompt-12">What is the purpose of a properly installed lightning protection system on a building?</h2></div>
+  
+  <div class="question-tools"></div>
+  <fieldset><legend class='sr-only'>Your answer</legend><label class='option'><input type='radio' name='answer-12' value='Provide a conducting route to the ground if the building is struck' aria-describedby='feedback-12'><span>Provide a conducting route to the ground if the building is struck</span></label><label class='option'><input type='radio' name='answer-12' value='Pull every nearby storm toward the roof' aria-describedby='feedback-12'><span>Pull every nearby storm toward the roof</span></label><label class='option'><input type='radio' name='answer-12' value='Store the storm inside a metal rod' aria-describedby='feedback-12'><span>Store the storm inside a metal rod</span></label></fieldset>
+  <div class="feedback" id="feedback-12" hidden></div>
+</article></div>
+      <div class="actions">
+        <button id="check" type="button" disabled>Check my answers <span aria-hidden="true">↗</span></button>
+        <button id="reset" class="secondary" type="button" disabled>Start again</button>
+      </div>
+      <p id="score" class="score" role="status" tabindex="-1"></p>
+      <p id="speech-status" class="speech-status" role="status"></p>
+    </div>
+    <details class="sources"><summary>Quiz sources</summary><ul><li>Flash of Genius 6 — Unit 4 · p. 37–44</li><li>NOAA — How lightning is created</li><li>National Weather Service — Lightning safety tips</li><li>National Weather Service — Lightning Safety Awareness Week</li><li>National Weather Service — Lightning rods</li><li>USGS — Conductivity and water</li><li>OpenStax — Conductors and insulators</li><li>NOAA — Ten Basic Clouds</li><li>NWS — Thunder</li><li>FHWA — Moisture Content Measurement</li></ul></details>
+  </main>
+  <script id="quiz-data" type="application/json">{"language":"en","shuffleQuestions":false,"questions":[{"answers":["cumulonimbus"],"explanation":"Cumulonimbus clouds are thunderstorm clouds.","solutionSteps":[],"points":1},{"answers":["B"],"explanation":"A longer delay means that the sound travelled farther. Flash B was farther away. Both storms still require shelter.","solutionSteps":[],"points":1},{"answers":["Light travels faster than sound."],"explanation":"The light reaches you sooner. The sound takes longer to travel from the discharge to you.","solutionSteps":[],"points":1},{"answers":["Collisions between small ice crystals and soft hail"],"explanation":"Particles collide inside the cloud. These collisions, together with air movements, help separate charges. Whole clouds do not need to rub against each other.","solutionSteps":[],"points":1},{"answers":["Metal carries current; plastic helps insulate it."],"explanation":"Metals such as copper are good conductors. The plastic cover is an insulator that helps keep current in the intended path when the cable is intact and used correctly.","solutionSteps":[],"points":1},{"answers":["The wet piece"],"explanation":"Moisture containing dissolved ions generally increases wood\u0027s conductivity. The exact result also depends on the wood and the test setup.","solutionSteps":[],"points":1},{"answers":["Water with dissolved salt"],"explanation":"Dissolved salt provides charged particles called ions that can carry current. Very pure water conducts poorly.","solutionSteps":[],"points":1},{"answers":["The key allows enough current to flow to light the bulb."],"explanation":"The key helps complete a conducting path. The battery supplies the energy. A bulb that stays dark in another test does not prove that absolutely no current can flow.","solutionSteps":[],"points":1},{"answers":["A very strong electric field can make the air conduct."],"explanation":"A strong enough electric field can break down air\u0027s insulating behaviour. The resulting conducting path allows a discharge.","solutionSteps":[],"points":1},{"answers":["Inside a solid building with closed walls and a roof"],"explanation":"Go indoors when you hear thunder. A fully enclosed vehicle with a metal roof and the windows closed is another suitable option. Open shelters and trees do not provide proper protection.","solutionSteps":[],"points":1},{"answers":["At least 30 minutes"],"explanation":"Wait at least 30 minutes after the last thunder. A storm can still be dangerous after the rain stops.","solutionSteps":[],"points":1},{"answers":["Provide a conducting route to the ground if the building is struck"],"explanation":"The system helps carry the discharge to the ground and reduce damage. A lightning rod does not attract lightning or guarantee that a building can never be damaged.","solutionSteps":[],"points":1}],"labels":{"correct":"Well done!","incorrect":"Try again","empty":"Answer this question before checking it.","answer":"Expected answer: ","changed":"Your answers have changed. Check again to update your score.","answered":"questions answered","score":"Your score","missing":"still to answer","speaking":"Reading the word\u2026","audio":{"phrase":"Hello! This sentence helps you test the sound.","ready":"Select \u201CTest the voice\u201D, then tell us if you hear the sentence.","waiting":"Speech requested. Waiting for the voice\u2026","playing":"The browser reports that speech has started.","finished":"The browser reports that speech has finished. Did you hear the sentence?","wordFinished":"The browser reports that the word has finished.","heard":"You confirm that sound works for this test.","silent":"Speech was reported, but you heard nothing. Check this tab\u2019s sound and your audio output. Then compare with the downloaded file opened directly in Edge.","stopped":"Speech stopped. You can try again.","unsupported":"Speech synthesis is unavailable on this page. Try the downloaded file opened directly in Edge.","noStart":"The voice did not start within 8 seconds. The cause is unconfirmed. Retry, then compare with the downloaded file.","noEnd":"Speech may be stuck: no end was reported within 30 seconds. Retry with the downloaded file.","blocked":"The browser refused to start speech. Click the button again; if it persists, try outside the OneDrive preview.","missingVoice":"The engine cannot find the requested voice. Check the text-to-speech voices installed in Windows, then restart Edge.","network":"The voice reported a network error. Check your connection; a remote voice may need Internet.","device":"The speech engine cannot use the audio output. Check your speakers or headphones and retry.","engine":"The speech engine reported a failure. Restart Edge and retry.","unknown":"Speech failed. Check the details below and try the downloaded file.","voices":"Detected voices / in the requested language","selected":"Selected voice","automatic":"Browser\u2019s automatic selection","local":"on this device","remote":"remote service","embedded":"Opened in an embedded preview. Compare with the downloaded file to check the preview\u2019s effect.","direct":"Opened as a direct page.","code":"Last state"},"listenQuestion":"Listen to the word for question"}}</script>
+  <script>(() => {
+  "use strict";
+  const quiz = JSON.parse(document.getElementById("quiz-data").textContent);
+  const labels = quiz.labels;
+  const cards = Array.from(document.querySelectorAll("[data-question]"));
+  const score = document.getElementById("score");
+  const speechStatus = document.getElementById("speech-status");
+  const audioHelp = document.getElementById("audio-help");
+  const audioResult = document.getElementById("audio-result");
+  const audioConfirm = document.getElementById("audio-confirm");
+  const audioStop = document.getElementById("audio-stop");
+  const speechLanguage = quiz.language.toLowerCase().startsWith("es") ? "es-ES"
+    : quiz.language.toLowerCase().startsWith("en") ? "en-US" : "fr-CA";
+  const normalize = value => value.trim().normalize("NFC").toUpperCase();
+  const valueOf = card => {
+    const field = card.querySelector("input[type=text], textarea, select, input[type=radio]:checked");
+    return field ? field.value : "";
+  };
+  let checked = false;
+  let speechToken = 0;
+  let utterance;
+  let speechTimer;
+
+  function supportsSpeech() {
+    try {
+      return typeof window.speechSynthesis?.speak === "function" && typeof window.SpeechSynthesisUtterance === "function";
+    } catch {
+      return false;
+    }
+  }
+
+  function audioMessage(message, code, problem = false) {
+    if (!audioHelp) return;
+    audioResult.textContent = message;
+    document.getElementById("audio-code").textContent = labels.audio.code + " : " + code;
+    if (problem) {
+      audioHelp.open = true;
+      speechStatus.textContent = message;
+    }
+  }
+
+  function speechVoices() {
+    const voices = supportsSpeech() ? window.speechSynthesis.getVoices() : [];
+    const matching = voices.filter(voice => voice.lang.toLowerCase().replaceAll("_", "-").startsWith(speechLanguage.slice(0, 2)));
+    document.getElementById("audio-voices").textContent = labels.audio.voices + " (" + speechLanguage + ") : " + voices.length + " / " + matching.length;
+    return matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase() && voice.localService)
+      || matching.find(voice => voice.localService)
+      || matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase())
+      || matching[0];
+  }
+
+  function stopSpeech() {
+    speechToken++;
+    clearTimeout(speechTimer);
+    if (audioStop) audioStop.disabled = true;
+    try {
+      if (supportsSpeech()) window.speechSynthesis.cancel();
+    } catch {
+      // A voice service failure must not prevent clearing the answers.
+    }
+    utterance = null;
+  }
+
+  function shuffleQuestions() {
+    if (!quiz.shuffleQuestions) return;
+    for (let index = cards.length - 1; index > 0; index--) {
+      const other = Math.floor(Math.random() * (index + 1));
+      [cards[index], cards[other]] = [cards[other], cards[index]];
+    }
+    const container = document.querySelector(".questions");
+    cards.forEach((card, index) => {
+      container.append(card);
+      card.querySelector(".question-number").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector(".listen")?.setAttribute("aria-label", `${labels.listenQuestion} ${index + 1}`);
+    });
+  }
+
+  function updateProgress() {
+    const answered = cards.filter(card => valueOf(card).trim() !== "").length;
+    document.getElementById("progress").value = answered;
+    document.getElementById("progress-text").textContent = `${answered} / ${cards.length} ${labels.answered}`;
+  }
+
+  function paragraph(parent, text) {
+    const element = document.createElement("p");
+    element.textContent = text;
+    parent.append(element);
+  }
+
+  function checkAnswers() {
+    let points = 0;
+    let missing = 0;
+    const total = quiz.questions.reduce((sum, question) => sum + question.points, 0);
+    cards.forEach(card => {
+      const question = quiz.questions[Number(card.dataset.question)];
+      const answer = normalize(valueOf(card));
+      const correct = answer !== "" && question.answers.some(accepted => normalize(accepted) === answer);
+      const feedback = card.querySelector(".feedback");
+      feedback.replaceChildren();
+      feedback.hidden = false;
+      card.dataset.state = answer === "" ? "empty" : correct ? "correct" : "incorrect";
+      card.querySelectorAll("input, textarea, select").forEach(input => input.setAttribute("aria-invalid", correct ? "false" : "true"));
+      const heading = document.createElement("strong");
+      heading.textContent = answer === "" ? labels.empty : correct ? `✓ ${labels.correct}` : labels.incorrect;
+      feedback.append(heading);
+      if (answer === "") {
+        missing++;
+        return;
+      }
+      if (correct) points += question.points;
+      else paragraph(feedback, labels.answer + question.answers.join(" / "));
+      if (question.explanation) paragraph(feedback, question.explanation);
+      if (question.solutionSteps.length > 0) {
+        const steps = document.createElement("ol");
+        question.solutionSteps.forEach(step => {
+          const item = document.createElement("li");
+          item.textContent = step;
+          steps.append(item);
+        });
+        feedback.append(steps);
+      }
+    });
+    checked = true;
+    score.textContent = `${labels.score} : ${points} / ${total}${missing ? ` · ${missing} ${labels.missing}` : ""}`;
+    score.focus({ preventScroll: true });
+  }
+
+  function changed(card) {
+    card.querySelector(".feedback").hidden = true;
+    delete card.dataset.state;
+    card.querySelectorAll("input, textarea, select").forEach(input => input.removeAttribute("aria-invalid"));
+    if (checked) score.textContent = labels.changed;
+    updateProgress();
+  }
+
+  function speak(text, diagnostic = false) {
+    stopSpeech();
+    const token = speechToken;
+    audioConfirm.hidden = true;
+    speechStatus.textContent = "";
+    if (!supportsSpeech()) {
+      audioMessage(labels.audio.unsupported, "unsupported", true);
+      return;
+    }
+    const finish = () => {
+      if (token !== speechToken) return false;
+      clearTimeout(speechTimer);
+      audioStop.disabled = true;
+      utterance = null;
+      speechToken++;
+      return true;
+    };
+    const fail = code => {
+      if (!finish()) return;
+      const category = {
+        "not-allowed": "blocked", "language-unavailable": "missingVoice", "voice-unavailable": "missingVoice",
+        "synthesis-unavailable": "engine", "synthesis-failed": "engine",
+        "audio-busy": "device", "audio-hardware": "device", "network": "network",
+        "start-timeout": "noStart", "end-timeout": "noEnd", "canceled": "stopped", "interrupted": "stopped"
+      }[code] || "unknown";
+      audioMessage(labels.audio[category], code, true);
+      try { window.speechSynthesis.cancel(); } catch { /* Keep the diagnostic visible. */ }
+    };
+    try {
+      utterance = new SpeechSynthesisUtterance(text);
+      const voice = speechVoices();
+      document.getElementById("audio-selected").textContent = labels.audio.selected + " : " +
+        (voice ? voice.name + " (" + voice.lang + ", " + (voice.localService ? labels.audio.local : labels.audio.remote) + ")" : labels.audio.automatic);
+      utterance.lang = voice?.lang || speechLanguage;
+      if (voice) utterance.voice = voice;
+      utterance.rate = .85;
+      utterance.volume = 1;
+      utterance.onstart = () => {
+        if (token !== speechToken) return;
+        clearTimeout(speechTimer);
+        audioMessage(labels.audio.playing, "started");
+        speechStatus.textContent = diagnostic ? labels.audio.playing : labels.speaking;
+        speechTimer = setTimeout(() => fail("end-timeout"), 30000);
+      };
+      utterance.onend = () => {
+        if (!finish()) return;
+        audioMessage(diagnostic ? labels.audio.finished : labels.audio.wordFinished, "ended");
+        speechStatus.textContent = "";
+        audioConfirm.hidden = !diagnostic;
+      };
+      utterance.onerror = event => { if (token === speechToken) fail(event.error || "unknown"); };
+      audioStop.disabled = false;
+      audioMessage(labels.audio.waiting, "requested");
+      speechTimer = setTimeout(() => fail("start-timeout"), 8000);
+      window.speechSynthesis.resume();
+      window.speechSynthesis.speak(utterance);
+    } catch (error) {
+      fail(error.name || "exception");
+    }
+  }
+
+  if (audioHelp) {
+    audioMessage(labels.audio.ready, "ready");
+    document.getElementById("audio-environment").textContent = window.self !== window.top ? labels.audio.embedded : labels.audio.direct;
+    const refreshVoices = () => {
+      try { speechVoices(); }
+      catch { audioMessage(labels.audio.unknown, "voice-list-error", true); }
+    };
+    refreshVoices();
+    if (supportsSpeech()) window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
+    else audioMessage(labels.audio.unsupported, "unsupported", true);
+    document.getElementById("audio-test").addEventListener("click", () => speak(labels.audio.phrase, true));
+    audioStop.addEventListener("click", () => {
+      stopSpeech();
+      audioConfirm.hidden = true;
+      speechStatus.textContent = "";
+      audioMessage(labels.audio.stopped, "stopped");
+    });
+    document.getElementById("audio-heard").addEventListener("click", () => {
+      audioConfirm.hidden = true;
+      audioMessage(labels.audio.heard, "heard");
+    });
+    document.getElementById("audio-silent").addEventListener("click", () => {
+      audioConfirm.hidden = true;
+      audioMessage(labels.audio.silent, "not-heard", true);
+    });
+  }
+
+  cards.forEach(card => {
+    card.querySelectorAll("input, textarea, select").forEach(input => {
+      input.addEventListener("input", () => changed(card));
+      if (input.type === "radio" || input.tagName === "SELECT") input.addEventListener("change", () => changed(card));
+      input.addEventListener("keydown", event => {
+        if (event.key === "Enter" && !event.isComposing && input.tagName !== "TEXTAREA" && input.tagName !== "SELECT") {
+          event.preventDefault();
+          const next = cards[cards.indexOf(card) + 1]?.querySelector("input, textarea, select") || document.getElementById("check");
+          next.focus();
+        }
+      });
+    });
+    const button = card.querySelector(".listen");
+    if (button) {
+      button.addEventListener("click", () => speak(quiz.questions[Number(card.dataset.question)].answers[0]));
+      button.disabled = false;
+    }
+  });
+
+  const check = document.getElementById("check");
+  check.addEventListener("click", checkAnswers);
+  check.disabled = false;
+  const reset = document.getElementById("reset");
+  reset.addEventListener("click", () => {
+    stopSpeech();
+    if (audioHelp) {
+      audioConfirm.hidden = true;
+      audioMessage(labels.audio.ready, "ready");
+    }
+    cards.forEach(card => {
+      card.querySelectorAll("input, textarea, select").forEach(input => {
+        if (input.type === "radio") input.checked = false;
+        else input.value = "";
+      });
+      changed(card);
+    });
+    checked = false;
+    shuffleQuestions();
+    score.textContent = "";
+    speechStatus.textContent = "";
+    cards[0]?.querySelector("input, textarea, select")?.focus();
+  });
+  reset.disabled = false;
+  shuffleQuestions();
+  updateProgress();
+  document.getElementById("interactive").hidden = false;
+  document.getElementById("opening-help").hidden = true;
+})();
+</script>
+</body>
+</html>
