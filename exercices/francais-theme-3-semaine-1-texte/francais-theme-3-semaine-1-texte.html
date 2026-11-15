@@ -210,6 +210,11 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
   </div>
   <details class="audio-details">
     <summary>D&#233;tails du diagnostic</summary>
+    <div id="audio-voice-picker" hidden>
+      <label for="audio-voice-choice">Voix</label>
+      <select id="audio-voice-choice" aria-describedby="audio-voice-help"></select>
+      <p id="audio-voice-help">Choisis une voix, puis clique sur &#171; Tester la voix &#187;. Ton choix reste actif dans cette page.</p>
+    </div>
     <p id="audio-environment"></p>
     <p id="audio-voices"></p>
     <p id="audio-selected"></p>
@@ -299,7 +304,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     </div>
     <details class="sources"><summary>Les sources du mini-test</summary><ul><li>Document de r&#233;f&#233;rence priv&#233;</li></ul></details>
   </main>
-  <script id="quiz-data" type="application/json">{"language":"fr","shuffleQuestions":false,"questions":[{"answers":["vallon"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["villa"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["accepter"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["accompagner"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["nettoyage"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["frotter"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["allumer"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["appuyer"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["illustration"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["d\u0027accord","d\u2019accord"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["accrocher"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["afficher"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["attirer"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["botter"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["flatter"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["accuser"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["effacer"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["litt\u00E9rature"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["apprentissage"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["affamer"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["attaquer"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["intervalle"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["affection"],"explanation":null,"solutionSteps":[],"points":1}],"labels":{"correct":"Bien jou\u00E9 !","incorrect":"\u00C0 revoir","empty":"R\u00E9ponds \u00E0 cette question avant de la corriger.","answer":"R\u00E9ponse attendue : ","changed":"Tes r\u00E9ponses ont chang\u00E9. Corrige \u00E0 nouveau pour actualiser le r\u00E9sultat.","answered":"r\u00E9ponses compl\u00E9t\u00E9es","score":"Ton r\u00E9sultat","missing":"\u00E0 compl\u00E9ter","speaking":"Lecture du mot\u2026","audio":{"phrase":"Bonjour ! Tu peux entendre cette phrase pour tester le son.","ready":"Clique sur \u00AB Tester la voix \u00BB, puis indique si tu entends la phrase.","waiting":"Lecture demand\u00E9e. En attente de la voix\u2026","playing":"Le navigateur annonce que la lecture a commenc\u00E9.","finished":"Le navigateur annonce la fin de la lecture. As-tu entendu la phrase ?","wordFinished":"Le navigateur annonce la fin de la lecture du mot.","heard":"Tu confirmes que le son fonctionne pour ce test.","silent":"La lecture est annonc\u00E9e, mais tu n\u2019entends rien. V\u00E9rifie le son de cet onglet et la sortie audio. Compare ensuite avec le fichier t\u00E9l\u00E9charg\u00E9 ouvert directement dans Edge.","stopped":"Lecture arr\u00EAt\u00E9e. Tu peux r\u00E9essayer.","unsupported":"La synth\u00E8se vocale n\u2019est pas disponible dans cette page. Essaie le fichier t\u00E9l\u00E9charg\u00E9, ouvert directement dans Edge.","noStart":"La voix n\u2019a pas d\u00E9marr\u00E9 apr\u00E8s 8 secondes. La cause n\u2019est pas confirm\u00E9e. R\u00E9essaie, puis compare avec le fichier t\u00E9l\u00E9charg\u00E9.","noEnd":"La lecture semble bloqu\u00E9e : aucune fin re\u00E7ue apr\u00E8s 30 secondes. R\u00E9essaie avec le fichier t\u00E9l\u00E9charg\u00E9.","blocked":"Le navigateur refuse de d\u00E9marrer la voix. Clique \u00E0 nouveau sur le bouton; si cela persiste, essaie hors de l\u2019aper\u00E7u OneDrive.","missingVoice":"Le moteur ne trouve pas la voix demand\u00E9e. V\u00E9rifie les voix de synth\u00E8se vocale install\u00E9es dans Windows, puis red\u00E9marre Edge.","network":"La voix a signal\u00E9 une erreur r\u00E9seau. V\u00E9rifie la connexion; une voix distante peut avoir besoin d\u2019Internet.","device":"Le moteur vocal n\u2019arrive pas \u00E0 utiliser la sortie audio. V\u00E9rifie les haut-parleurs ou le casque et r\u00E9essaie.","engine":"Le moteur de synth\u00E8se vocale a signal\u00E9 un \u00E9chec. R\u00E9essaie apr\u00E8s avoir red\u00E9marr\u00E9 Edge.","unknown":"La lecture a \u00E9chou\u00E9. Consulte les d\u00E9tails ci-dessous et essaie le fichier t\u00E9l\u00E9charg\u00E9.","voices":"Voix d\u00E9tect\u00E9es / dans la langue demand\u00E9e","selected":"Voix choisie","automatic":"Choix automatique du navigateur","local":"sur l\u2019appareil","remote":"service distant","embedded":"Ouverture : aper\u00E7u int\u00E9gr\u00E9. Compare avec le fichier t\u00E9l\u00E9charg\u00E9 pour v\u00E9rifier l\u2019effet de l\u2019aper\u00E7u.","direct":"Ouverture : page directe.","code":"Dernier \u00E9tat"},"listenQuestion":"\u00C9couter le mot de la question"}}</script>
+  <script id="quiz-data" type="application/json">{"language":"fr","shuffleQuestions":false,"questions":[{"answers":["vallon"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"vallon"},{"answers":["villa"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"villa"},{"answers":["accepter"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"accepter"},{"answers":["accompagner"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"accompagner"},{"answers":["nettoyage"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"nettoyage"},{"answers":["frotter"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"frotter"},{"answers":["allumer"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"allumer"},{"answers":["appuyer"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"appuyer"},{"answers":["illustration"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"illustration"},{"answers":["d\u0027accord","d\u2019accord"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"d\u0027accord"},{"answers":["accrocher"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"accrocher"},{"answers":["afficher"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"afficher"},{"answers":["attirer"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"attirer"},{"answers":["botter"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"botter"},{"answers":["flatter"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"flatter"},{"answers":["accuser"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"accuser"},{"answers":["effacer"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"effacer"},{"answers":["litt\u00E9rature"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"litt\u00E9rature"},{"answers":["apprentissage"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"apprentissage"},{"answers":["affamer"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"affamer"},{"answers":["attaquer"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"attaquer"},{"answers":["intervalle"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"intervalle"},{"answers":["affection"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"affection"}],"labels":{"correct":"Bien jou\u00E9 !","incorrect":"\u00C0 revoir","empty":"R\u00E9ponds \u00E0 cette question avant de la corriger.","answer":"R\u00E9ponse attendue : ","changed":"Tes r\u00E9ponses ont chang\u00E9. Corrige \u00E0 nouveau pour actualiser le r\u00E9sultat.","answered":"r\u00E9ponses compl\u00E9t\u00E9es","score":"Ton r\u00E9sultat","missing":"\u00E0 compl\u00E9ter","speaking":"Lecture du mot\u2026","audio":{"phrase":"Bonjour ! Tu peux entendre cette phrase pour tester le son.","ready":"Clique sur \u00AB Tester la voix \u00BB, puis indique si tu entends la phrase.","waiting":"Lecture demand\u00E9e. En attente de la voix\u2026","playing":"Le navigateur annonce que la lecture a commenc\u00E9.","finished":"Le navigateur annonce la fin de la lecture. As-tu entendu la phrase ?","wordFinished":"Le navigateur annonce la fin de la lecture du mot.","heard":"Tu confirmes que le son fonctionne pour ce test.","silent":"La lecture est annonc\u00E9e, mais tu n\u2019entends rien. V\u00E9rifie le son de cet onglet et la sortie audio. Compare ensuite avec le fichier t\u00E9l\u00E9charg\u00E9 ouvert directement dans Edge.","stopped":"Lecture arr\u00EAt\u00E9e. Tu peux r\u00E9essayer.","unsupported":"La synth\u00E8se vocale n\u2019est pas disponible dans cette page. Essaie le fichier t\u00E9l\u00E9charg\u00E9, ouvert directement dans Edge.","noStart":"La voix n\u2019a pas d\u00E9marr\u00E9 apr\u00E8s 8 secondes. La cause n\u2019est pas confirm\u00E9e. R\u00E9essaie, puis compare avec le fichier t\u00E9l\u00E9charg\u00E9.","noEnd":"La lecture semble bloqu\u00E9e : aucune fin re\u00E7ue apr\u00E8s 30 secondes. R\u00E9essaie avec le fichier t\u00E9l\u00E9charg\u00E9.","blocked":"Le navigateur refuse de d\u00E9marrer la voix. Clique \u00E0 nouveau sur le bouton; si cela persiste, essaie hors de l\u2019aper\u00E7u OneDrive.","missingVoice":"Le moteur ne trouve pas la voix demand\u00E9e. V\u00E9rifie les voix de synth\u00E8se vocale install\u00E9es dans Windows, puis red\u00E9marre Edge.","network":"La voix a signal\u00E9 une erreur r\u00E9seau. V\u00E9rifie la connexion; une voix distante peut avoir besoin d\u2019Internet.","device":"Le moteur vocal n\u2019arrive pas \u00E0 utiliser la sortie audio. V\u00E9rifie les haut-parleurs ou le casque et r\u00E9essaie.","engine":"Le moteur de synth\u00E8se vocale a signal\u00E9 un \u00E9chec. R\u00E9essaie apr\u00E8s avoir red\u00E9marr\u00E9 Edge.","unknown":"La lecture a \u00E9chou\u00E9. Consulte les d\u00E9tails ci-dessous et essaie le fichier t\u00E9l\u00E9charg\u00E9.","voices":"Voix d\u00E9tect\u00E9es / dans la langue demand\u00E9e","selected":"Voix choisie","automatic":"Choix automatique du navigateur","local":"sur l\u2019appareil","remote":"service distant","embedded":"Ouverture : aper\u00E7u int\u00E9gr\u00E9. Compare avec le fichier t\u00E9l\u00E9charg\u00E9 pour v\u00E9rifier l\u2019effet de l\u2019aper\u00E7u.","direct":"Ouverture : page directe.","code":"Dernier \u00E9tat"},"listenQuestion":"\u00C9couter le mot de la question"}}</script>
   <script>(() => {
   "use strict";
   const quiz = JSON.parse(document.getElementById("quiz-data").textContent);
@@ -311,8 +316,10 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
   const audioResult = document.getElementById("audio-result");
   const audioConfirm = document.getElementById("audio-confirm");
   const audioStop = document.getElementById("audio-stop");
+  const voiceSelect = document.getElementById("audio-voice-choice");
+  let preferredVoice = "";
   const speechLanguage = quiz.language.toLowerCase().startsWith("es") ? "es-ES"
-    : quiz.language.toLowerCase().startsWith("en") ? "en-US" : "fr-CA";
+    : quiz.language.toLowerCase().startsWith("en") ? "en-CA" : "fr-CA";
   const normalize = value => value.trim().normalize("NFC").toUpperCase();
   const valueOf = card => {
     const field = card.querySelector("input[type=text], textarea, select, input[type=radio]:checked");
@@ -345,6 +352,21 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     const voices = supportsSpeech() ? window.speechSynthesis.getVoices() : [];
     const matching = voices.filter(voice => voice.lang.toLowerCase().replaceAll("_", "-").startsWith(speechLanguage.slice(0, 2)));
     document.getElementById("audio-voices").textContent = labels.audio.voices + " (" + speechLanguage + ") : " + voices.length + " / " + matching.length;
+    const voiceKey = voice => JSON.stringify([voice.voiceURI, voice.name, voice.lang]);
+    const chosen = matching.find(voice => voiceKey(voice) === preferredVoice);
+    if (!chosen) preferredVoice = "";
+    voiceSelect.replaceChildren(new Option(labels.audio.automatic, ""));
+    matching.forEach(voice => voiceSelect.add(new Option(`${voice.name} (${voice.lang})`, voiceKey(voice))));
+    voiceSelect.value = preferredVoice;
+    document.getElementById("audio-voice-picker").hidden = matching.length < 2;
+    if (chosen) return chosen;
+    if (speechLanguage === "en-CA") {
+      for (const language of ["en-ca", "en-us"]) {
+        const regional = matching.filter(voice => voice.lang.toLowerCase().replaceAll("_", "-") === language);
+        const voice = regional.find(voice => voice.localService) || regional[0];
+        if (voice) return voice;
+      }
+    }
     return matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase() && voice.localService)
       || matching.find(voice => voice.localService)
       || matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase())
@@ -504,6 +526,14 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
       catch { audioMessage(labels.audio.unknown, "voice-list-error", true); }
     };
     refreshVoices();
+    voiceSelect.addEventListener("change", () => {
+      preferredVoice = voiceSelect.value;
+      stopSpeech();
+      audioConfirm.hidden = true;
+      speechStatus.textContent = "";
+      document.getElementById("audio-selected").textContent = "";
+      audioMessage(labels.audio.ready, "ready");
+    });
     if (supportsSpeech()) window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
     else audioMessage(labels.audio.unsupported, "unsupported", true);
     document.getElementById("audio-test").addEventListener("click", () => speak(labels.audio.phrase, true));
@@ -537,7 +567,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     });
     const button = card.querySelector(".listen");
     if (button) {
-      button.addEventListener("click", () => speak(quiz.questions[Number(card.dataset.question)].answers[0]));
+      button.addEventListener("click", () => speak(quiz.questions[Number(card.dataset.question)].speechText));
       button.disabled = false;
     }
   });

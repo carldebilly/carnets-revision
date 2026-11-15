@@ -210,6 +210,11 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
   </div>
   <details class="audio-details">
     <summary>Diagnostic details</summary>
+    <div id="audio-voice-picker" hidden>
+      <label for="audio-voice-choice">Voice</label>
+      <select id="audio-voice-choice" aria-describedby="audio-voice-help"></select>
+      <p id="audio-voice-help">Choose a voice, then select “Test the voice”. Your choice stays active on this page.</p>
+    </div>
     <p id="audio-environment"></p>
     <p id="audio-voices"></p>
     <p id="audio-selected"></p>
@@ -350,7 +355,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     </div>
     <details class="sources"><summary>Quiz sources</summary><ul><li>Document de r&#233;f&#233;rence priv&#233;</li></ul></details>
   </main>
-  <script id="quiz-data" type="application/json">{"language":"en","shuffleQuestions":true,"questions":[{"answers":["acute"],"explanation":"The word is spelled acute.","solutionSteps":[],"points":1},{"answers":["bluster"],"explanation":"The word is spelled bluster.","solutionSteps":[],"points":1},{"answers":["bungle"],"explanation":"The word is spelled bungle.","solutionSteps":[],"points":1},{"answers":["commentary"],"explanation":"The word is spelled commentary.","solutionSteps":[],"points":1},{"answers":["duration"],"explanation":"The word is spelled duration.","solutionSteps":[],"points":1},{"answers":["eerie"],"explanation":"The word is spelled eerie.","solutionSteps":[],"points":1},{"answers":["facet"],"explanation":"The word is spelled facet.","solutionSteps":[],"points":1},{"answers":["fidelity"],"explanation":"The word is spelled fidelity.","solutionSteps":[],"points":1},{"answers":["fray"],"explanation":"The word is spelled fray.","solutionSteps":[],"points":1},{"answers":["headstrong"],"explanation":"The word is spelled headstrong.","solutionSteps":[],"points":1},{"answers":["inhabitant"],"explanation":"The word is spelled inhabitant.","solutionSteps":[],"points":1},{"answers":["numb"],"explanation":"The word is spelled numb.","solutionSteps":[],"points":1},{"answers":["pacify"],"explanation":"The word is spelled pacify.","solutionSteps":[],"points":1},{"answers":["ravenous"],"explanation":"The word is spelled ravenous.","solutionSteps":[],"points":1},{"answers":["refute"],"explanation":"The word is spelled refute.","solutionSteps":[],"points":1},{"answers":["remorse"],"explanation":"The word is spelled remorse.","solutionSteps":[],"points":1},{"answers":["setback"],"explanation":"The word is spelled setback.","solutionSteps":[],"points":1},{"answers":["smug"],"explanation":"The word is spelled smug.","solutionSteps":[],"points":1},{"answers":["synopsis"],"explanation":"The word is spelled synopsis.","solutionSteps":[],"points":1},{"answers":["tarry"],"explanation":"The word is spelled tarry.","solutionSteps":[],"points":1}],"labels":{"correct":"Well done!","incorrect":"Try again","empty":"Answer this question before checking it.","answer":"Expected answer: ","changed":"Your answers have changed. Check again to update your score.","answered":"questions answered","score":"Your score","missing":"still to answer","speaking":"Reading the word\u2026","audio":{"phrase":"Hello! This sentence helps you test the sound.","ready":"Select \u201CTest the voice\u201D, then tell us if you hear the sentence.","waiting":"Speech requested. Waiting for the voice\u2026","playing":"The browser reports that speech has started.","finished":"The browser reports that speech has finished. Did you hear the sentence?","wordFinished":"The browser reports that the word has finished.","heard":"You confirm that sound works for this test.","silent":"Speech was reported, but you heard nothing. Check this tab\u2019s sound and your audio output. Then compare with the downloaded file opened directly in Edge.","stopped":"Speech stopped. You can try again.","unsupported":"Speech synthesis is unavailable on this page. Try the downloaded file opened directly in Edge.","noStart":"The voice did not start within 8 seconds. The cause is unconfirmed. Retry, then compare with the downloaded file.","noEnd":"Speech may be stuck: no end was reported within 30 seconds. Retry with the downloaded file.","blocked":"The browser refused to start speech. Click the button again; if it persists, try outside the OneDrive preview.","missingVoice":"The engine cannot find the requested voice. Check the text-to-speech voices installed in Windows, then restart Edge.","network":"The voice reported a network error. Check your connection; a remote voice may need Internet.","device":"The speech engine cannot use the audio output. Check your speakers or headphones and retry.","engine":"The speech engine reported a failure. Restart Edge and retry.","unknown":"Speech failed. Check the details below and try the downloaded file.","voices":"Detected voices / in the requested language","selected":"Selected voice","automatic":"Browser\u2019s automatic selection","local":"on this device","remote":"remote service","embedded":"Opened in an embedded preview. Compare with the downloaded file to check the preview\u2019s effect.","direct":"Opened as a direct page.","code":"Last state"},"listenQuestion":"Listen to the word for question"}}</script>
+  <script id="quiz-data" type="application/json">{"language":"en","shuffleQuestions":true,"questions":[{"answers":["acute"],"explanation":"The word is spelled acute.","solutionSteps":[],"points":1,"speechText":"acute. The patient felt an acute pain in her knee. acute."},{"answers":["bluster"],"explanation":"The word is spelled bluster.","solutionSteps":[],"points":1,"speechText":"bluster. The bully began to bluster and make empty threats. bluster."},{"answers":["bungle"],"explanation":"The word is spelled bungle.","solutionSteps":[],"points":1,"speechText":"bungle. Read the steps so you do not bungle the repair. bungle."},{"answers":["commentary"],"explanation":"The word is spelled commentary.","solutionSteps":[],"points":1,"speechText":"commentary. We listened to the sports commentary on the radio. commentary."},{"answers":["duration"],"explanation":"The word is spelled duration.","solutionSteps":[],"points":1,"speechText":"duration. Stay seated for the duration of the flight. duration."},{"answers":["eerie"],"explanation":"The word is spelled eerie.","solutionSteps":[],"points":1,"speechText":"eerie. An eerie sound came from the empty house. eerie."},{"answers":["facet"],"explanation":"The word is spelled facet.","solutionSteps":[],"points":1,"speechText":"facet. We studied every facet of the problem. facet."},{"answers":["fidelity"],"explanation":"The word is spelled fidelity.","solutionSteps":[],"points":1,"speechText":"fidelity. The dog\u0027s fidelity to its owner never changed. fidelity."},{"answers":["fray"],"explanation":"The word is spelled fray.","solutionSteps":[],"points":1,"speechText":"fray. A small fray broke out between the rival teams. fray."},{"answers":["headstrong"],"explanation":"The word is spelled headstrong.","solutionSteps":[],"points":1,"speechText":"headstrong. The headstrong captain refused to listen to advice. headstrong."},{"answers":["inhabitant"],"explanation":"The word is spelled inhabitant.","solutionSteps":[],"points":1,"speechText":"inhabitant. Each inhabitant of the village received a letter. inhabitant."},{"answers":["numb"],"explanation":"The word is spelled numb.","solutionSteps":[],"points":1,"speechText":"numb. My fingers felt numb in the icy wind. numb."},{"answers":["pacify"],"explanation":"The word is spelled pacify.","solutionSteps":[],"points":1,"speechText":"pacify. A gentle voice helped pacify the frightened child. pacify."},{"answers":["ravenous"],"explanation":"The word is spelled ravenous.","solutionSteps":[],"points":1,"speechText":"ravenous. After the long hike, we were ravenous. ravenous."},{"answers":["refute"],"explanation":"The word is spelled refute.","solutionSteps":[],"points":1,"speechText":"refute. Use clear evidence to refute a false claim. refute."},{"answers":["remorse"],"explanation":"The word is spelled remorse.","solutionSteps":[],"points":1,"speechText":"remorse. She felt remorse after hurting her friend\u0027s feelings. remorse."},{"answers":["setback"],"explanation":"The word is spelled setback.","solutionSteps":[],"points":1,"speechText":"setback. The broken wheel was a setback for our project. setback."},{"answers":["smug"],"explanation":"The word is spelled smug.","solutionSteps":[],"points":1,"speechText":"smug. He gave a smug smile after boasting about his score. smug."},{"answers":["synopsis"],"explanation":"The word is spelled synopsis.","solutionSteps":[],"points":1,"speechText":"synopsis. Write a short synopsis of the movie\u0027s story. synopsis."},{"answers":["tarry"],"explanation":"The word is spelled tarry.","solutionSteps":[],"points":1,"speechText":"tarry. Do not tarry at the gate; the bus is leaving. tarry."}],"labels":{"correct":"Well done!","incorrect":"Try again","empty":"Answer this question before checking it.","answer":"Expected answer: ","changed":"Your answers have changed. Check again to update your score.","answered":"questions answered","score":"Your score","missing":"still to answer","speaking":"Reading the word and example\u2026","audio":{"phrase":"Hello! This sentence helps you test the sound.","ready":"Select \u201CTest the voice\u201D, then tell us if you hear the sentence.","waiting":"Speech requested. Waiting for the voice\u2026","playing":"The browser reports that speech has started.","finished":"The browser reports that speech has finished. Did you hear the sentence?","wordFinished":"The browser reports that the word has finished.","heard":"You confirm that sound works for this test.","silent":"Speech was reported, but you heard nothing. Check this tab\u2019s sound and your audio output. Then compare with the downloaded file opened directly in Edge.","stopped":"Speech stopped. You can try again.","unsupported":"Speech synthesis is unavailable on this page. Try the downloaded file opened directly in Edge.","noStart":"The voice did not start within 8 seconds. The cause is unconfirmed. Retry, then compare with the downloaded file.","noEnd":"Speech may be stuck: no end was reported within 30 seconds. Retry with the downloaded file.","blocked":"The browser refused to start speech. Click the button again; if it persists, try outside the OneDrive preview.","missingVoice":"The engine cannot find the requested voice. Check the text-to-speech voices installed in Windows, then restart Edge.","network":"The voice reported a network error. Check your connection; a remote voice may need Internet.","device":"The speech engine cannot use the audio output. Check your speakers or headphones and retry.","engine":"The speech engine reported a failure. Restart Edge and retry.","unknown":"Speech failed. Check the details below and try the downloaded file.","voices":"Detected voices / in the requested language","selected":"Selected voice","automatic":"Browser\u2019s automatic selection","local":"on this device","remote":"remote service","embedded":"Opened in an embedded preview. Compare with the downloaded file to check the preview\u2019s effect.","direct":"Opened as a direct page.","code":"Last state"},"listenQuestion":"Listen to the word for question"}}</script>
   <script>(() => {
   "use strict";
   const quiz = JSON.parse(document.getElementById("quiz-data").textContent);
@@ -362,8 +367,10 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
   const audioResult = document.getElementById("audio-result");
   const audioConfirm = document.getElementById("audio-confirm");
   const audioStop = document.getElementById("audio-stop");
+  const voiceSelect = document.getElementById("audio-voice-choice");
+  let preferredVoice = "";
   const speechLanguage = quiz.language.toLowerCase().startsWith("es") ? "es-ES"
-    : quiz.language.toLowerCase().startsWith("en") ? "en-US" : "fr-CA";
+    : quiz.language.toLowerCase().startsWith("en") ? "en-CA" : "fr-CA";
   const normalize = value => value.trim().normalize("NFC").toUpperCase();
   const valueOf = card => {
     const field = card.querySelector("input[type=text], textarea, select, input[type=radio]:checked");
@@ -396,6 +403,21 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     const voices = supportsSpeech() ? window.speechSynthesis.getVoices() : [];
     const matching = voices.filter(voice => voice.lang.toLowerCase().replaceAll("_", "-").startsWith(speechLanguage.slice(0, 2)));
     document.getElementById("audio-voices").textContent = labels.audio.voices + " (" + speechLanguage + ") : " + voices.length + " / " + matching.length;
+    const voiceKey = voice => JSON.stringify([voice.voiceURI, voice.name, voice.lang]);
+    const chosen = matching.find(voice => voiceKey(voice) === preferredVoice);
+    if (!chosen) preferredVoice = "";
+    voiceSelect.replaceChildren(new Option(labels.audio.automatic, ""));
+    matching.forEach(voice => voiceSelect.add(new Option(`${voice.name} (${voice.lang})`, voiceKey(voice))));
+    voiceSelect.value = preferredVoice;
+    document.getElementById("audio-voice-picker").hidden = matching.length < 2;
+    if (chosen) return chosen;
+    if (speechLanguage === "en-CA") {
+      for (const language of ["en-ca", "en-us"]) {
+        const regional = matching.filter(voice => voice.lang.toLowerCase().replaceAll("_", "-") === language);
+        const voice = regional.find(voice => voice.localService) || regional[0];
+        if (voice) return voice;
+      }
+    }
     return matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase() && voice.localService)
       || matching.find(voice => voice.localService)
       || matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase())
@@ -555,6 +577,14 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
       catch { audioMessage(labels.audio.unknown, "voice-list-error", true); }
     };
     refreshVoices();
+    voiceSelect.addEventListener("change", () => {
+      preferredVoice = voiceSelect.value;
+      stopSpeech();
+      audioConfirm.hidden = true;
+      speechStatus.textContent = "";
+      document.getElementById("audio-selected").textContent = "";
+      audioMessage(labels.audio.ready, "ready");
+    });
     if (supportsSpeech()) window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
     else audioMessage(labels.audio.unsupported, "unsupported", true);
     document.getElementById("audio-test").addEventListener("click", () => speak(labels.audio.phrase, true));
@@ -588,7 +618,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     });
     const button = card.querySelector(".listen");
     if (button) {
-      button.addEventListener("click", () => speak(quiz.questions[Number(card.dataset.question)].answers[0]));
+      button.addEventListener("click", () => speak(quiz.questions[Number(card.dataset.question)].speechText));
       button.disabled = false;
     }
   });

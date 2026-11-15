@@ -187,7 +187,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
       <svg class='illustration' viewBox='0 0 144 128' aria-hidden='true' fill='none' stroke='currentColor' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='M17 31q28-14 55 3 27-17 55-3v65q-28-13-55 2-27-15-55-2Z' fill='var(--accent-soft)'/><path d='M72 34v64M30 47q16-4 28 4m-28 12q16-4 28 4m28-16q12-8 28-4m-28 20q12-8 28-4M112 10v13m-6-6h12'/></svg>
     </header>
     <section class="introduction">
-      <p>Listen to each word and complete the sentence. On paper, ask an adult to read the words from the answer key. Allow 10 to 15 minutes.</p>
+      <p>Select Listen to hear the word, its example sentence, then the word again. Write only the missing word. To try another voice, open Sound not working? and Diagnostic details. On paper, ask an adult to read the words and sentences from the answer key. Allow 10 to 15 minutes.</p>
       
       
     </section>
@@ -210,6 +210,11 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
   </div>
   <details class="audio-details">
     <summary>Diagnostic details</summary>
+    <div id="audio-voice-picker" hidden>
+      <label for="audio-voice-choice">Voice</label>
+      <select id="audio-voice-choice" aria-describedby="audio-voice-help"></select>
+      <p id="audio-voice-help">Choose a voice, then select “Test the voice”. Your choice stays active on this page.</p>
+    </div>
     <p id="audio-environment"></p>
     <p id="audio-voices"></p>
     <p id="audio-selected"></p>
@@ -350,7 +355,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     </div>
     <details class="sources"><summary>Quiz sources</summary><ul><li>Document de r&#233;f&#233;rence priv&#233;</li></ul></details>
   </main>
-  <script id="quiz-data" type="application/json">{"language":"en","shuffleQuestions":true,"questions":[{"answers":["agenda"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["amiable"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["befuddled"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["blight"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["boisterous"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["clarity"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["compliant"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["conserve"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["debut"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["gory"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["gross"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["induce"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["leeway"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["limber"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["maze"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["oracle"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["partisan"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["reimburse"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["vacate"],"explanation":null,"solutionSteps":[],"points":1},{"answers":["vagabond"],"explanation":null,"solutionSteps":[],"points":1}],"labels":{"correct":"Well done!","incorrect":"Try again","empty":"Answer this question before checking it.","answer":"Expected answer: ","changed":"Your answers have changed. Check again to update your score.","answered":"questions answered","score":"Your score","missing":"still to answer","speaking":"Reading the word\u2026","audio":{"phrase":"Hello! This sentence helps you test the sound.","ready":"Select \u201CTest the voice\u201D, then tell us if you hear the sentence.","waiting":"Speech requested. Waiting for the voice\u2026","playing":"The browser reports that speech has started.","finished":"The browser reports that speech has finished. Did you hear the sentence?","wordFinished":"The browser reports that the word has finished.","heard":"You confirm that sound works for this test.","silent":"Speech was reported, but you heard nothing. Check this tab\u2019s sound and your audio output. Then compare with the downloaded file opened directly in Edge.","stopped":"Speech stopped. You can try again.","unsupported":"Speech synthesis is unavailable on this page. Try the downloaded file opened directly in Edge.","noStart":"The voice did not start within 8 seconds. The cause is unconfirmed. Retry, then compare with the downloaded file.","noEnd":"Speech may be stuck: no end was reported within 30 seconds. Retry with the downloaded file.","blocked":"The browser refused to start speech. Click the button again; if it persists, try outside the OneDrive preview.","missingVoice":"The engine cannot find the requested voice. Check the text-to-speech voices installed in Windows, then restart Edge.","network":"The voice reported a network error. Check your connection; a remote voice may need Internet.","device":"The speech engine cannot use the audio output. Check your speakers or headphones and retry.","engine":"The speech engine reported a failure. Restart Edge and retry.","unknown":"Speech failed. Check the details below and try the downloaded file.","voices":"Detected voices / in the requested language","selected":"Selected voice","automatic":"Browser\u2019s automatic selection","local":"on this device","remote":"remote service","embedded":"Opened in an embedded preview. Compare with the downloaded file to check the preview\u2019s effect.","direct":"Opened as a direct page.","code":"Last state"},"listenQuestion":"Listen to the word for question"}}</script>
+  <script id="quiz-data" type="application/json">{"language":"en","shuffleQuestions":true,"questions":[{"answers":["agenda"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"agenda. You add the rehearsal to your agenda. agenda."},{"answers":["amiable"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"amiable. The amiable guide welcomes everyone with a smile. amiable."},{"answers":["befuddled"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"befuddled. The strange map leaves you befuddled. befuddled."},{"answers":["blight"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"blight. A plant disease can blight the garden. blight."},{"answers":["boisterous"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"boisterous. The boisterous crowd cheers loudly. boisterous."},{"answers":["clarity"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"clarity. The speaker explains the rules with clarity. clarity."},{"answers":["compliant"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"compliant. The compliant players follow every rule. compliant."},{"answers":["conserve"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"conserve. You turn off the tap to conserve water. conserve."},{"answers":["debut"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"debut. The young actor makes his debut tonight. debut."},{"answers":["gory"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"gory. The film is too gory for young children. gory."},{"answers":["gross"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"gross. The rotten food smells gross. gross."},{"answers":["induce"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"induce. The spinning ride may induce dizziness. induce."},{"answers":["leeway"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"leeway. The extra time gives you some leeway. leeway."},{"answers":["limber"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"limber. The limber dancer bends easily. limber."},{"answers":["maze"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"maze. You follow a path through the maze. maze."},{"answers":["oracle"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"oracle. In the old story, an oracle predicts the future. oracle."},{"answers":["partisan"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"partisan. The partisan fan always supports the same team. partisan."},{"answers":["reimburse"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"reimburse. The club will reimburse you for the tickets. reimburse."},{"answers":["vacate"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"vacate. You must vacate the room before noon. vacate."},{"answers":["vagabond"],"explanation":null,"solutionSteps":[],"points":1,"speechText":"vagabond. The story follows a vagabond with no fixed home. vagabond."}],"labels":{"correct":"Well done!","incorrect":"Try again","empty":"Answer this question before checking it.","answer":"Expected answer: ","changed":"Your answers have changed. Check again to update your score.","answered":"questions answered","score":"Your score","missing":"still to answer","speaking":"Reading the word and example\u2026","audio":{"phrase":"Hello! This sentence helps you test the sound.","ready":"Select \u201CTest the voice\u201D, then tell us if you hear the sentence.","waiting":"Speech requested. Waiting for the voice\u2026","playing":"The browser reports that speech has started.","finished":"The browser reports that speech has finished. Did you hear the sentence?","wordFinished":"The browser reports that the word has finished.","heard":"You confirm that sound works for this test.","silent":"Speech was reported, but you heard nothing. Check this tab\u2019s sound and your audio output. Then compare with the downloaded file opened directly in Edge.","stopped":"Speech stopped. You can try again.","unsupported":"Speech synthesis is unavailable on this page. Try the downloaded file opened directly in Edge.","noStart":"The voice did not start within 8 seconds. The cause is unconfirmed. Retry, then compare with the downloaded file.","noEnd":"Speech may be stuck: no end was reported within 30 seconds. Retry with the downloaded file.","blocked":"The browser refused to start speech. Click the button again; if it persists, try outside the OneDrive preview.","missingVoice":"The engine cannot find the requested voice. Check the text-to-speech voices installed in Windows, then restart Edge.","network":"The voice reported a network error. Check your connection; a remote voice may need Internet.","device":"The speech engine cannot use the audio output. Check your speakers or headphones and retry.","engine":"The speech engine reported a failure. Restart Edge and retry.","unknown":"Speech failed. Check the details below and try the downloaded file.","voices":"Detected voices / in the requested language","selected":"Selected voice","automatic":"Browser\u2019s automatic selection","local":"on this device","remote":"remote service","embedded":"Opened in an embedded preview. Compare with the downloaded file to check the preview\u2019s effect.","direct":"Opened as a direct page.","code":"Last state"},"listenQuestion":"Listen to the word for question"}}</script>
   <script>(() => {
   "use strict";
   const quiz = JSON.parse(document.getElementById("quiz-data").textContent);
@@ -362,8 +367,10 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
   const audioResult = document.getElementById("audio-result");
   const audioConfirm = document.getElementById("audio-confirm");
   const audioStop = document.getElementById("audio-stop");
+  const voiceSelect = document.getElementById("audio-voice-choice");
+  let preferredVoice = "";
   const speechLanguage = quiz.language.toLowerCase().startsWith("es") ? "es-ES"
-    : quiz.language.toLowerCase().startsWith("en") ? "en-US" : "fr-CA";
+    : quiz.language.toLowerCase().startsWith("en") ? "en-CA" : "fr-CA";
   const normalize = value => value.trim().normalize("NFC").toUpperCase();
   const valueOf = card => {
     const field = card.querySelector("input[type=text], textarea, select, input[type=radio]:checked");
@@ -396,6 +403,21 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     const voices = supportsSpeech() ? window.speechSynthesis.getVoices() : [];
     const matching = voices.filter(voice => voice.lang.toLowerCase().replaceAll("_", "-").startsWith(speechLanguage.slice(0, 2)));
     document.getElementById("audio-voices").textContent = labels.audio.voices + " (" + speechLanguage + ") : " + voices.length + " / " + matching.length;
+    const voiceKey = voice => JSON.stringify([voice.voiceURI, voice.name, voice.lang]);
+    const chosen = matching.find(voice => voiceKey(voice) === preferredVoice);
+    if (!chosen) preferredVoice = "";
+    voiceSelect.replaceChildren(new Option(labels.audio.automatic, ""));
+    matching.forEach(voice => voiceSelect.add(new Option(`${voice.name} (${voice.lang})`, voiceKey(voice))));
+    voiceSelect.value = preferredVoice;
+    document.getElementById("audio-voice-picker").hidden = matching.length < 2;
+    if (chosen) return chosen;
+    if (speechLanguage === "en-CA") {
+      for (const language of ["en-ca", "en-us"]) {
+        const regional = matching.filter(voice => voice.lang.toLowerCase().replaceAll("_", "-") === language);
+        const voice = regional.find(voice => voice.localService) || regional[0];
+        if (voice) return voice;
+      }
+    }
     return matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase() && voice.localService)
       || matching.find(voice => voice.localService)
       || matching.find(voice => voice.lang.toLowerCase().replaceAll("_", "-") === speechLanguage.toLowerCase())
@@ -555,6 +577,14 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
       catch { audioMessage(labels.audio.unknown, "voice-list-error", true); }
     };
     refreshVoices();
+    voiceSelect.addEventListener("change", () => {
+      preferredVoice = voiceSelect.value;
+      stopSpeech();
+      audioConfirm.hidden = true;
+      speechStatus.textContent = "";
+      document.getElementById("audio-selected").textContent = "";
+      audioMessage(labels.audio.ready, "ready");
+    });
     if (supportsSpeech()) window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
     else audioMessage(labels.audio.unsupported, "unsupported", true);
     document.getElementById("audio-test").addEventListener("click", () => speak(labels.audio.phrase, true));
@@ -588,7 +618,7 @@ button:disabled { cursor: default; opacity: .55; filter: none; transform: none; 
     });
     const button = card.querySelector(".listen");
     if (button) {
-      button.addEventListener("click", () => speak(quiz.questions[Number(card.dataset.question)].answers[0]));
+      button.addEventListener("click", () => speak(quiz.questions[Number(card.dataset.question)].speechText));
       button.disabled = false;
     }
   });
